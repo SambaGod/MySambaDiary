@@ -1,0 +1,52 @@
+/* Header Style */
+
+header {
+	width: 100%;
+	height: 200px;
+	background: #111;
+	margin: 0 auto;
+}
+
+/* Footer Style */
+
+footer {
+
+	width: 100%;
+	height: 200px;
+	background: #111;
+	margin: 0 auto;
+
+}
+
+/* Body style */
+
+#my-wrapper {
+
+	width: 1000px;
+	margin:0 auto;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	color: red;
+	border: 2px solid gray;
+
+}
+
+#my-login-image{
+
+	width: 132px;
+	height: 125px;
+	background-image: url("https://sambadiary.com/wp-content/uploads/2019/03/shop-btn.png");
+	margin: 0 auto;
+
+}
+
+#my-login-form{
+
+	width: 500px;
+	height: 400px;
+	background: green;
+	margin: 0 auto;
+	margin-top: 50px;
+	margin-bottom: 50px;
+
+}
