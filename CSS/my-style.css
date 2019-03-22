@@ -1,7 +1,7 @@
 /* Header Style */
 
 header {
-	width: 100%;
+	width:;
 	height: 200px;
 	background: #111;
 	margin: 0 auto;
@@ -11,7 +11,7 @@ header {
 
 footer {
 
-	width: 100%;
+	width:;
 	height: 200px;
 	background: #111;
 	margin: 0 auto;
@@ -26,7 +26,6 @@ footer {
 	margin:0 auto;
 	margin-top: 20px;
 	margin-bottom: 20px;
-	color: red;
 	border: 2px solid gray;
 
 }
@@ -37,16 +36,87 @@ footer {
 	height: 125px;
 	background-image: url("https://sambadiary.com/wp-content/uploads/2019/03/shop-btn.png");
 	margin: 0 auto;
+	position: absolute;
+	left: 45%;
 
 }
 
 #my-login-form{
 
-	width: 500px;
-	height: 400px;
-	background: green;
+	width: 400px;
+	height: 531px;
+	background: #111;
 	margin: 0 auto;
 	margin-top: 50px;
 	margin-bottom: 50px;
+	align-items: center;
+	color: #fff;
+	border:;
 
+}
+
+#my-login-form h2{
+	text-align: center;
+	font-family: Arial;
+	font-size:;
+	color: #fff;
+
+}
+
+.my-content{
+
+	width: 350px;
+	margin:0 auto;
+	font-family: sans-serif;
+	font-weight: bold;
+	color: #fff;
+
+}
+
+.my-content a{
+
+	text-decoration: none;
+	font-size: 12px;
+	color: darkgrey;
+
+}
+
+.my-content a:hover{
+
+	text-decoration: underline;
+
+}
+
+.my-content input{
+
+	width: 100%;
+	height: 30px;
+	margin-bottom: 20px;
+
+}
+
+.my-content input[type="text"], input[type="password"]{
+
+	border: none;
+	border-bottom: 1px solid #fff;
+	background: transparent;
+	outline: none;
+	color: #fff;
+	font-size: 16px;
+}
+
+.my-content input[type="submit"]{
+
+	height: 40px;
+	background: #ED1D25;
+	color: #fff;
+	font-size: 18px;
+	border: none;
+	outline: none;
+	border-radius: 10px;
+}
+
+.my-content input[type="submit"]:hover{
+
+	background: #92050a;
 }

@@ -8,8 +8,12 @@
 </head>
 <body>
 
+<!-- Header Section -->
 
 <header></header>
+
+
+<!-- Construction -->
 
 <marquee style="border: 2px solid red; color: red; margin-top: 20px; margin-bottom: 5px;">
 Page Under Construction &nbsp; &nbsp; &nbsp;
@@ -39,12 +43,49 @@ Page Under Construction &nbsp; &nbsp; &nbsp;
 Page Under Construction &nbsp; &nbsp; &nbsp;
 </marquee>
 
+<!-- Login form -->
+
 <div id="my-wrapper">
 
 	<div id="my-login-image"></div>
-	<div id="my-login-form"></div>
+
+	<div id="my-login-form">
+
+	<div style="height: 80px; background: #eee; border-bottom: 5px solid #ED1D25;"></div>
+		
+		<h2>Welcome to My Samba Diary</h2>
+
+		<div class="my-content">
+		<form style="color: #fff;" action="my-process.php" method="POST">
+			Username <br>
+			<input type="text" name="user" placeholder="Enter Username">
+
+			Password <br>
+			<input type="Password" name="pass" placeholder="Enter Password">
+
+			<br><br>
+			<input type="submit" value="login">
+		</form>
+
+		<br>
+
+		<a href="#">Forgot your password?</a><br>
+		<a href="#">Don't have an account?</a>
+
+		<p>&nbsp;</p>
+
+		</div>
+
+		<div style="height: 70px; background: #eee; border-top: 5px solid #ED1D25;"></div>
+
+	</div>
+
+	<a href="https://sambadiary.com">Back to Samba Diary</a>
 
 </div>
+
+
+<!-- Footer Section -->
 
 <footer></footer>
 

@@ -1,34 +1,24 @@
-<?php
+<!DOCTYPE html>
 
-	//Get values from login form
+<html>
 
-	$MyUser = $_POST["my-user"];
-	$MyPass = $_POST["my-pass"];
+<body>
+<?php 
 
-	//To prevent mysql injection
+include"my-config.php";
 
-	$MyUser = stripcslashes($MyUser);
-	$MyPass = stripcslashes($MyPass);
-	$MyUser = mysql_real_escape_string($MyUser);
-	$MyPass = mysql_real_escape_string($MyPass);
 
-	//Connect to server and select database
-	mysql_connect("rdbms.strato.de","U3656601","sqYMT60G91hHv007l", "DB3656601");
-	mysql_select_db("Login")
+if($con){echo "Database connection successful";}
+else{echo "Not connected to database";}
 
-	//Query database for user
-	$result = mysql_query("select * from Login where my-user='$MyUser' and my-pass='$MyPass'") or die ("Failed to query database " 
-		.mysql_error());
-	$row = mysql_fetch_array($result);
 
-	if ($row['my-user'] == $MyUser && $row['my-pass'] == $MyPass) {
+$user = $_POST['user'];
+$pass = $_POST['pass'];
 
-		echo "Login Success! welcome ".$row['my-user'];}
+echo "<br><br><br>Hi $user. We are excited as much as you are but we need more time to develope this project. We appreciate your support :)";
 
-	else {
-
-		echo "Failed to Login";
-
-	}
-	
 ?>
+<br><br>
+<a href="javascript:history.back()">Go Back</a>
+</body>
+</html>
