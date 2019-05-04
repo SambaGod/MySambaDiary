@@ -2,6 +2,8 @@ const express = require("express");
 const fs = require("fs");
 const mysql = require("mysql");
 const bodyParser = require('body-parser');
+
+const cors = require("cors");
 var passport = require('passport');
 var flash    = require('connect-flash');
 
@@ -13,14 +15,13 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 const app = express();
 
-app.set("view engine", "ejs");
-app.set('views', __dirname + '/views');
-app.engine('html', require('ejs').renderFile);
-
 app.set("port", process.env.PORT || 3001);
-app.use(express.static("img"));
-app.use(express.static("css"));
-app.use(express.static("clientjs"));
+
+//CORS declaration for enabling the client from port 8080 to send requests
+app.use(cors({
+    origin: 'http://localhost:8080',
+    credentials: true
+  }));
 
 app.use(morgan('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)
@@ -42,15 +43,10 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 
 var season = 1;
 
-
 // Express only serves static assets in production
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
-
-app.get('/', function(req, res){
-  res.sendFile(__dirname + '/index.html');
-});
 
 app.get('/delete', function(req, res){
   if(req.user) {
@@ -133,6 +129,10 @@ app.get('/register', function(req, res) {
     res.render('login.ejs', { message: req.flash('loginMessage') });
   });
 
+  app.post('/test', function(req, res) {
+      console.log("aaaaa")
+  })
+
   // process the login form
   app.post('/login', passport.authenticate('local-login', {
     successRedirect : '/dashboard', // redirect to the secure profile section
@@ -148,6 +148,7 @@ app.get('/register', function(req, res) {
               req.session.cookie.expires = false;
             }
         res.redirect('/');
+       console.log("aaaaaa");
     });
 
   // process the signup form

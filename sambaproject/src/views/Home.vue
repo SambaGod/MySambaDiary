@@ -1,18 +1,31 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1>Login</h1>
+    <input v-model="user" placeholder="You user!">
+    <input v-model="password" placeholder="Secret!">
+    <button @click="login()">Login!</button>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import AuthenticationService from '@/services/AuthenticationService.js'
 
 export default {
   name: 'home',
-  components: {
-    HelloWorld
+  data() {
+    return {
+      user: "",
+      password: ""
+    }
+  },
+  methods: {
+    login() {
+      const response = AuthenticationService.register({
+        u: this.user,
+        pw: this.password
+      })
+      console.log(response)
+    }
   }
 }
 </script>
