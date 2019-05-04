@@ -94,9 +94,21 @@ app.get('/admin/members', requiresAdmin(), function(req, res) {
 })
 
 app.get('/profile', function(req, res) {
-  console.log(req.user);
+  console.log("mmm");
   if(req.user) {
     res.render('profile', {
+      user: req.user // get the user out of session and pass to template
+    });
+  } else {
+    res.sendFile(__dirname + '/index.html');
+  }
+  
+});
+
+app.get('/dashboard', function(req, res) {
+  console.log(req.user);
+  if(req.user) {
+    res.render('dashboard', {
       user: req.user // get the user out of session and pass to template
     });
   } else {
@@ -123,7 +135,7 @@ app.get('/register', function(req, res) {
 
   // process the login form
   app.post('/login', passport.authenticate('local-login', {
-    successRedirect : '/profile', // redirect to the secure profile section
+    successRedirect : '/dashboard', // redirect to the secure profile section
     failureRedirect : '/', // redirect back to the signup page if there is an error
     failureFlash : true // allow flash messages
     }),
