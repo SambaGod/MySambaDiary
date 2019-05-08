@@ -100,6 +100,7 @@ module.exports = function(passport) {
                 if (!rows.length) {
                     console.log("ei useria");
                     return done(null, false, req.flash('loginMessage', 'No user found.')); // req.flash is the way to set flashdata using connect-flash
+                    //return res.status(403).send({error: 'The login information was incorrect'})              
                 }
 
                 // if the user is found but the password is wrong
