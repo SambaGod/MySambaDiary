@@ -18,16 +18,7 @@
         },    
         methods: {    
             getUserData: function() {    
-                let self = this    
-                axios.get("/api/user")    
-                    .then((response) => {    
-                        console.log(response)    
-                        self.$set(this, "user", response.data.user)    
-                    })    
-                    .catch((errors) => {    
-                        console.log(errors)    
-                        router.push("/")    
-                    })    
+                let self = this   
             }    
         },    
         mounted() {    

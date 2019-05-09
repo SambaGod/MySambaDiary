@@ -15,23 +15,32 @@
   export default {
     name: "Login",    
     methods: {    
-    login: (e) => {    
-      e.preventDefault()    
-      let email = "user@email.com"   
-      let password = "password"    
-      let login = () => { 
-        let data = {    
+    login: (e) => {
+      e.preventDefault()
+      let email = "user@email.com"
+      let password = "password"   
+      let login = () => {
+        let data = {
           email: email,
-          password: password 
+          password: password
         }
-        axios.post("/api/login", data)    
-          .then((response) => {    
-            console.log(response)    
-            router.push("/dashboard")    
-          })    
-          .catch((errors) => {    
-            console.log("Cannot log in")    
-          })    
+        axios.post("/api/login", data)
+          .then((response) => {
+            console.log(response)
+            axios.get("/api/user")
+              .then((response) => {
+                //self.$set(this, "user", response.data.user)
+                console.log(response)
+                router.push('/dashboard') 
+              })
+              .catch((errors) => {
+                console.log(errors)
+                router.push("/")
+              })
+          })
+          .catch((errors) => {
+            console.log("Cannot log in")
+          })
       }    
       login()    
     }    
