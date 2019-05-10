@@ -9,11 +9,14 @@
     </div>
 </template>
 
-<script>  
+<script>
   import router from "../router"    
   import axios from "axios"    
   export default {
-    name: "Login",    
+    name: "Login",
+    mounted() {
+      console.log(this.$store.getters.user)
+    },
     methods: {    
     login: (e) => {
       e.preventDefault()
@@ -29,7 +32,6 @@
             console.log(response)
             axios.get("/api/user")
               .then((response) => {
-                //self.$set(this, "user", response.data.user)
                 console.log(response)
                 router.push('/dashboard') 
               })
@@ -42,7 +44,7 @@
             console.log("Cannot log in")
           })
       }    
-      login()    
+      login()
     }    
     }    
   }
