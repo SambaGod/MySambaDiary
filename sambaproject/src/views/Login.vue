@@ -1,17 +1,19 @@
 <template>  
     <div>
-      <b-container>
+      <v-container>
         <h2>Login</h2>
-        <b-card>
-        <form v-on:submit="login">
-            <label for="loginEmail">Email</label>
-            <b-form-input v-model="email" id="loginEmail" type="text" name="email" /></b-form-input>
-            <label for="loginPwd">Password</label>
-            <b-form-input v-model="password" id="loginPwd" type="password" name="password" /></b-form-input>  
-            <input type="submit" value="Login" />    
-        </form>
+        <b-card class="loginForm">
+        <b-form @submit="login">
+            <b-form-group label="Email" label-for="loginEmail">
+              <b-form-input v-model="email" id="loginEmail" placeholder="Email" type="text" name="email" /></b-form-input>
+            </b-form-group>
+            <b-form-group label="Password" label-for="loginPwd">
+              <b-form-input v-model="password" id="loginPwd" placeholder="Password" type="password" name="password" /></b-form-input>  
+            </b-form-group>
+            <b-button type="submit">Log in!</b-button>    
+        </b-form>
         </b-card>
-      </b-container>
+      </v-container>
     </div>
 </template>
 
@@ -61,6 +63,11 @@
 </script>
 <style>
 label {
+  display: inline-block;
   text-align: left;
+}
+
+.loginform {
+  width: 200px;
 }
 </style>

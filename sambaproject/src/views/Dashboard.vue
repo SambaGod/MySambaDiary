@@ -37,7 +37,17 @@
                         router.push("/")    
                     })    
             }    
-        },    
+        },
+        beforeCreate() {
+            axios.get("/api/user")    
+                .then((response) => {      
+                    console.log("continue")   
+                })    
+                .catch((errors) => {    
+                    console.log(errors)    
+                    router.push("/")    
+                })    
+        },
         mounted() {    
             this.getUserData()    
         }    
