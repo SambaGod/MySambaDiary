@@ -5,6 +5,15 @@ const app = express()
 const cookieSession = require('cookie-session')  
 const bodyParser = require('body-parser')  
 const passport = require('passport')
+const mysql = require("mysql")
+var bcrypt = require('bcrypt-nodejs');
+var dbconfig = {
+  'host': 'localhost',
+  'user': 'root',
+  'password': '',
+  'database': 'test'
+}
+var connection = mysql.createConnection(dbconfig);
 
 // getting the local authentication type
 const LocalStrategy = require('passport-local').Strategy
@@ -21,21 +30,6 @@ app.use(passport.initialize());
 
 app.use(passport.session());
 
-let users = [  
-  {
-    id: 1,
-    name: "Jude",
-    email: "user@email.com",
-    password: "password"
-  },
-  {
-    id: 2,
-    name: "Emma",
-    email: "emma@email.com",
-    password: "password2"
-  }
-]
-
 passport.use(  
   new LocalStrategy(
     {
@@ -43,17 +37,26 @@ passport.use(
       passwordField: "password"
     },
 
-    (username, password, done) => {
-      let user = users.find((user) => {
-        return user.email === username && user.password === password
-      })
+    (email, password, done) => {
+      connection.query("SELECT * FROM mylogin WHERE email = ?",[email], function(err, rows) {
+        if (err)
+          return done(err);
+        if (!rows.length) {
+          console.log("ei useria");
+          return done(null, false, {message: 'No user found.'}); // req.flash is the way to set flashdata using connect-flash
+          //return res.status(403).send({error: 'The login information was incorrect'})              
+        }
 
-      if (user) {
-        console.log("user found!")
-        done(null, user)
-      } else {
-        done(null, false, { message: 'Incorrect username or password'})
-      }
+        // if the user is found but the password is wrong
+        if (!bcrypt.compareSync(password, rows[0].password)) {
+          console.log("väärä salis");
+          return done(null, false, {message: 'Wrong password'}); // create the loginMessage and save it to session as flashdata
+        }
+                    
+        // all is well, return successful user
+        console.log(rows[0]);
+        return done(null, rows[0]);
+      })
     }
   )
 )
@@ -62,17 +65,15 @@ passport.serializeUser((user, done) => {
   done(null, user.id)
 })
 
-passport.deserializeUser((id, done) => {  
-  let user = users.find((user) => {
-    return user.id === id
-  })
-
-  done(null, user)
+passport.deserializeUser((id, done) => {
+  connection.query("SELECT id, email, name, isAdmin FROM mylogin WHERE id = ? ",[id], function(err, rows){
+    console.log(rows[0])
+    done(err, rows[0]);
+  });
 })
 
 app.post("/api/login", (req, res, next) => {  
   passport.authenticate("local", (err, user, info) => {
-    console.log("here")
     if (err) {
       return next(err);
     }
@@ -99,14 +100,11 @@ const authMiddleware = (req, res, next) => {
   }
 }
 
-app.get("/api/user", authMiddleware, (req, res) => {  
-  let user = users.find(user => {
-    return user.id === req.session.passport.user
-  })
-
-  console.log([user, req.session])
-
-  res.send({ user: user })
+app.get("/api/user", authMiddleware, (req, res) => {
+  connection.query("SELECT id, email, name, isAdmin FROM mylogin WHERE id = ? ",[req.session.passport.user], function(err, rows){
+    console.log(rows[0])
+    res.send({ user: rows[0] })
+  });
 })
 
 app.get("/api/logout", function(req, res) {  

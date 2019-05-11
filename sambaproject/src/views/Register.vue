@@ -1,16 +1,12 @@
 <template>  
     <div>
       <b-container>
-        <h2>Login</h2>
-        <b-card>
-        <form v-on:submit="login">
-            <label for="loginEmail">Email</label>
-            <b-form-input v-model="email" id="loginEmail" type="text" name="email" /></b-form-input>
-            <label for="loginPwd">Password</label>
-            <b-form-input v-model="password" id="loginPwd" type="password" name="password" /></b-form-input>  
+        <h2>Register</h2>    
+        <form v-on:submit="login">    
+            <input v-model="email" type="text" name="email" /><br>    
+            <input v-model="password" type="password" name="password" /><br>    
             <input type="submit" value="Login" />    
         </form>
-        </b-card>
       </b-container>
     </div>
 </template>
@@ -59,8 +55,3 @@
     }    
   }
 </script>
-<style>
-label {
-  text-align: left;
-}
-</style>

@@ -2,7 +2,7 @@
     <div>    
         <h2>Dashboard</h2>    
         <p>Name: {{ user }}</p>
-        <button v-on:click="logout">Logout</button>
+        <b-button v-on:click="logout">Logout</b-button>
     </div>
 </template>  
 <script>  
