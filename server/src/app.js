@@ -6,7 +6,7 @@ const cookieSession = require('cookie-session')
 const bodyParser = require('body-parser')  
 const passport = require('passport')
 const mysql = require("mysql")
-var bcrypt = require('bcrypt-nodejs');
+var bcrypt = require('bcrypt-nodejs')
 var dbconfig = {
   'host': 'localhost',
   'user': 'root',
@@ -43,14 +43,13 @@ passport.use(
           return done(err);
         if (!rows.length) {
           console.log("ei useria");
-          return done(null, false, {message: 'No user found.'}); // req.flash is the way to set flashdata using connect-flash
-          //return res.status(403).send({error: 'The login information was incorrect'})              
+          return done(null, false, {message: 'No user found.'});           
         }
 
         // if the user is found but the password is wrong
         if (!bcrypt.compareSync(password, rows[0].password)) {
           console.log("väärä salis");
-          return done(null, false, {message: 'Wrong password'}); // create the loginMessage and save it to session as flashdata
+          return done(null, false, {message: 'Wrong password'});
         }
                     
         // all is well, return successful user
@@ -72,7 +71,7 @@ passport.deserializeUser((id, done) => {
   });
 })
 
-app.post("/api/login", (req, res, next) => {  
+app.post("/api/login", (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     if (err) {
       return next(err);
@@ -87,6 +86,29 @@ app.post("/api/login", (req, res, next) => {
     });
   })(req, res, next);
 });
+
+app.post("/api/register", (req, res, next) =>{
+  console.log("trying to register")
+  console.log(req.body)
+  connection.query("SELECT * FROM mylogin WHERE email = ?", req.body.email, function(err, rows) {
+    if (err) {
+      res.send(err)
+    }
+    if (rows.length) {
+      res.send("Email is already taken")
+    } else {
+      var newUser = {
+        name: req.body.name,
+        password: bcrypt.hashSync(req.body.password, null, null),
+        email: req.body.email,
+        isAdmin: 0
+      }
+      connection.query("INSERT INTO mylogin (name, password, email, isAdmin) VALUES (?,?,?,?)", [newUser.name, newUser.password, newUser.email, newUser.isAdmin], function(err, rows) {
+        res.send("lisätty!")
+      })
+    }
+  })
+})
 
 app.get("/", function(req, res) {
   res.send("Welcome to the server!");

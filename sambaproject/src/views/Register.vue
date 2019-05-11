@@ -1,49 +1,53 @@
 <template>  
     <div>
-      <b-container>
-        <h2>Register</h2>    
-        <form v-on:submit="login">    
-            <input v-model="email" type="text" name="email" /><br>    
-            <input v-model="password" type="password" name="password" /><br>    
-            <input type="submit" value="Login" />    
-        </form>
-      </b-container>
+      <v-container>
+        <v-card class="loginForm">
+        <v-parallax :src="samba">
+        <h2>Register</h2>
+        <v-form @submit="login" ref="form">
+            <v-text-field v-model="email" label="Email" color="#FFFFFF" dark></v-text-field>
+            <v-text-field v-model="name" label="Name" color="#FFFFFF" dark></v-text-field>
+            <v-text-field v-model="password" label="Password" color="#FFFFFF" dark type="password"></v-text-field>
+            <v-btn type="submit">Register!</v-btn>    
+        </v-form>
+        </v-parallax>
+        </v-card>
+      </v-container>
     </div>
 </template>
 
 <script>
-  import router from "../router"    
-  import axios from "axios"    
+import router from "../router"    
+import axios from "axios"
+import loginPicture from "@/assets/bateria.jpg"
+
   export default {
     name: "Login",
     data() {
       return {
         email: "",
-        password: ""
+        name: "",
+        password: "",
+        samba: loginPicture
       }
     },
     methods: {    
     login: (e) => {
       e.preventDefault()
+      console.log(e)
       let email = e.target[0].value
-      let password = e.target[1].value
+      let username = e.target[1].value
+      let password = e.target[2].value
       let login = () => {
         let data = {
           email: email,
+          name: username,
           password: password
         }
-        axios.post("/api/login", data)
+        console.log(data)
+        axios.post("/api/register", data)
           .then((response) => {
             console.log(response)
-            axios.get("/api/user")
-              .then((response) => {
-                console.log(response)
-                router.push('/dashboard') 
-              })
-              .catch((errors) => {
-                console.log(errors)
-                router.push("/")
-              })
           })
           .catch((errors) => {
             console.log(errors)

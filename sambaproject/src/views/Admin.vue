@@ -1,0 +1,45 @@
+<template>  
+    <div>    
+        <h2>Admin</h2>    
+        <p>Welcome, {{ user }}</p>
+        <b-button v-on:click="logout">Logout</b-button>
+    </div>
+</template>  
+<script>  
+    import axios from "axios"
+    import router from "../router"    
+    export default {    
+        name: "Login",    
+        data() {    
+            return {    
+                user: {    
+                    name: "Defadmin"   
+                }    
+            }    
+        },    
+        methods: {
+            logout() {
+                axios.get("/api/logout")
+                   .then((response) => {
+                       console.log(response)
+                       router.push("/")
+                   })
+            },
+            getUserData: function() { 
+                let self = this    
+                axios.get("/api/user")    
+                    .then((response) => {    
+                        console.log(response)    
+                        self.$set(this, "user", response.data.user)    
+                    })    
+                    .catch((errors) => {    
+                        console.log(errors)    
+                        router.push("/")    
+                    })    
+            }    
+        },
+        mounted() {    
+            this.getUserData()    
+        }    
+    }
+</script>
