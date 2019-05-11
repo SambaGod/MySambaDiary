@@ -6,7 +6,7 @@
     </div>
 </template>  
 <script>  
-    import axios from "axios"    
+    import axios from "axios"
     import router from "../router"    
     export default {    
         name: "Login",    
@@ -37,16 +37,6 @@
                         router.push("/")    
                     })    
             }    
-        },
-        beforeCreate() {
-            axios.get("/api/user")    
-                .then((response) => {      
-                    console.log("continue")   
-                })    
-                .catch((errors) => {    
-                    console.log(errors)    
-                    router.push("/")    
-                })    
         },
         mounted() {    
             this.getUserData()    
