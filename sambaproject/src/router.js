@@ -5,6 +5,7 @@ import Login from './views/Login.vue'
 import Register from './views/Register.vue'
 import Dashboard from './views/Dashboard.vue'
 import Admin from './views/Admin.vue'
+import Userlist from './views/Userlist.vue'
 import axios from "axios"
 
 Vue.use(Router)
@@ -66,6 +67,29 @@ export default new Router({
              })   
           })   
       }
-    }
+    },
+    {
+      path: "/admin/users",
+      name: "Adminusers",
+      component: Userlist,
+      beforeEnter: (to, from, next) => {
+        axios.get("/api/user")    
+          .then((response) => {    
+            if (response.data.user.isAdmin) {
+              next()
+            } else {
+              next({
+                path: '/dashboard'
+              }) 
+            }
+          })
+          .catch((errors) => {    
+            console.log(errors)    
+            next({
+              path: '/login'
+             })   
+          })   
+      }
+    },
   ]
 })

@@ -38,10 +38,10 @@
           />
         </v-list-tile>
         <v-list-tile
-          v-for="(link, i) in links"
+          v-for="(link, i) in this.links"
           :key="i"
           :to="link.to"
-          :active-class="color"
+          :active-class="'#21a018'"
           avatar
           class="v-list-item"
         >
@@ -50,25 +50,34 @@
           </v-list-tile-action>
           <v-list-tile-title v-text="link.text"/>
         </v-list-tile>
-        <v-list-tile
-          disabled
-          active-class="primary"
-          class="v-list-item v-list__tile--buy"
-          to="/upgrade"
-        >
-          <v-list-tile-action>
-            <v-icon>mdi-package-up</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-title class="font-weight-light">
-            Upgrade To PRO
-          </v-list-tile-title>
-        </v-list-tile>
       </v-layout>
     </v-img>
 </v-navigation-drawer>
 </template>
 <script>
 export default {
-    name: "Sidebar"
+  name: "Sidebar",
+  data() {
+      return {
+          links: [
+              {
+                to: "/admin",
+                text: "Dashboard"
+              },
+              {
+                to: "/admin/schools",
+                text: "Samba schools"
+              },
+              {
+                to: "/admin/users",
+                text: "Users"
+              },
+              {
+                to: "/admin/events",
+                text: "Events"
+              }
+          ]
+      }
+  }
 }
 </script>

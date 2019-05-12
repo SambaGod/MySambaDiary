@@ -129,6 +129,13 @@ app.get("/api/user", authMiddleware, (req, res) => {
   });
 })
 
+app.get("/api/users", authMiddleware, (req, res) => {
+  connection.query("SELECT id, email, name, isAdmin FROM mylogin", function(err, rows){
+    console.log("momo")
+    res.send({ users: rows })
+  });
+})
+
 app.get("/api/logout", function(req, res) {  
   req.logout();
 
