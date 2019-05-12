@@ -6,17 +6,17 @@
         <v-layout row wrap>
           <v-flex md4 xs12>
             <v-card color="primary">
-              <v-card-text class="px-0">12</v-card-text>
+              <v-card-text class="px-0"><h2>New registered users</h2></v-card-text>
                 </v-card>
               </v-flex>
           <v-flex md4 xs12>
-            <v-card dark color="primary">
-              <v-card-text class="px-0">12</v-card-text>
+            <v-card color="primary">
+              <v-card-text class="px-0"><h2>Events</h2></v-card-text>
             </v-card>
           </v-flex>
           <v-flex md4 xs12>
-            <v-card dark color="primary">
-              <v-card-text class="px-0">12</v-card-text>
+            <v-card color="primary">
+              <v-card-text class="px-0"><h2>Something statistics</h2></v-card-text>
             </v-card>
           </v-flex>
         </v-layout>
