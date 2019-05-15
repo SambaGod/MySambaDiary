@@ -50,11 +50,19 @@
           </v-list-tile-action>
           <v-list-tile-title v-text="link.text"/>
         </v-list-tile>
+
+        <b-button v-on:click="logout" class="lgout">Logout</b-button>
+
       </v-layout>
     </v-img>
+    
 </v-navigation-drawer>
 </template>
 <script>
+
+import axios from "axios"
+import router from "../router"
+
 export default {
   name: "Sidebar",
   data() {
@@ -75,9 +83,29 @@ export default {
               {
                 to: "/admin/events",
                 text: "Events"
-              }
+              },
+              
           ]
-      }
+      }  
+  },
+
+  methods: {
+    logout() {
+            axios.get("/api/logout")
+              .then((response) => {
+                console.log(response)
+                router.push("/")
+              })
+        }
   }
+
 }
 </script>
+
+<style>
+.lgout{
+  margin-top: 100px;
+  margin-left: -70px;
+}
+
+</style>
