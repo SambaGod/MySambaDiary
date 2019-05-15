@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Sidebar></Sidebar>
+    <Sidebar/>
     <v-content>
       <v-container fluid grid-list-md>
         <v-layout row wrap>
@@ -23,7 +23,6 @@
         <div>    
           <h2>Admin</h2>    
           <p>Welcome, {{ user }}</p>
-          <b-button v-on:click="logout">Logout</b-button>
           <div>Add school leader</div>
           <div>Remove users</div>
           <div></div>
@@ -43,22 +42,13 @@ import Sidebar from "@/components/Sidebar"
         name: "Login",    
         data() {    
             return {    
-                user: {    
-                    name: "Defadmin"   
-                }    
+                user: {}   
             }    
         },
         components: {
             Sidebar
         },
         methods: {
-            logout() {
-                axios.get("/api/logout")
-                   .then((response) => {
-                       console.log(response)
-                       router.push("/")
-                   })
-            },
             getUserData: function() { 
                 let self = this    
                 axios.get("/api/user")    
