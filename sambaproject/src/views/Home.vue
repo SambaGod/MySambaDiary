@@ -1,9 +1,7 @@
 <template>
 <div id="homeBod">
   <Header />
-  <div id="lwrap">
-  <router-view></router-view>
-  </div>
+  <div>Home</div>
  
 <footer></footer>
 </div>

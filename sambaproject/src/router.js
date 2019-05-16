@@ -7,6 +7,7 @@ import Register from './views/Register.vue'
 import Dashboard from './views/Dashboard.vue'
 import Admin from './views/Admin.vue'
 import Userlist from './views/Userlist.vue'
+import Guest from './views/Guest.vue'
 import axios from "axios"
 
 Vue.use(Router)
@@ -15,14 +16,20 @@ export default new Router({
   routes: [
     {
       path: '/',
-      component: Home,
+      name: 'Homepage',
+      component: Home
+    },
+    {
+      path: '/guest',
+      name: 'Guest',
+      component: Guest,
       children: [
         {
-          path: "login",
+          path: "/login",
           component: Login
         },
         {
-          path: "register",
+          path: "/register",
           component: Register
         }
       ]
