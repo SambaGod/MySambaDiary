@@ -73,14 +73,6 @@ label {
   text-align: left;
 }
 
-#imgbckr {
-  background-color: black;
-}
-
-#kkk {
-  opacity: 0.4;
-}
-
 .notRegistered {
   text-align: right;
 }
