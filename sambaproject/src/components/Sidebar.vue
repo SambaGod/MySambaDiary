@@ -67,6 +67,7 @@ export default {
   name: "Sidebar",
   data() {
       return {
+          logo: "",
           links: [
               {
                 to: "/admin",
@@ -88,15 +89,24 @@ export default {
           ]
       }  
   },
-
   methods: {
     logout() {
-            axios.get("/api/logout")
-              .then((response) => {
-                console.log(response)
-                router.push("/")
-              })
-        }
+      axios.get("/api/logout")
+        .then((response) => {
+          console.log(response)
+          router.push("/")
+        })
+    }
+  },
+  computed: {
+    inputValue: {
+      get () {
+        return this.$store.getters.adminSidebarOpen
+      },
+      set (val) {
+        this.$store.commit('toggleSidebar', val)
+      }
+    }
   }
 
 }
