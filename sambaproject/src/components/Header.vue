@@ -1,36 +1,54 @@
 <template>
-<div id="head">
 <div id="nav">
-      <router-link to="./">Home</router-link> |
+<nav class="headline">
+  <v-toolbar app>
+    <v-toolbar-side-icon class="grey--text" @click="drawer=!drawer"></v-toolbar-side-icon>
+    <toolbar-title class="grey--text">
+      <span class="font-weight-thin">My</span>
+      <span><b>SambaDiary</b></span>&nbsp;
+    </toolbar-title>
+    
+     <router-link to="./">Home</router-link> |
       <router-link to="./login">Login</router-link> |
       <router-link to="./register">Register</router-link>
-</div>
+
+      <v-spacer></v-spacer>
+
+    <v-btn depressed class="grey--text headline">
+    <span>LOGIN</span>
+    <v-icon right>power_settings_new</v-icon>
+    </v-btn>
+
+    
+  </v-toolbar>
+
+  <v-navigation-drawer app v-model="drawer" class="grey">
+   <p>Hurray! You found me :D</p>
+  </v-navigation-drawer>
+
+  </nav>
 </div>
 </template>
 
 <script>
 export default {
-    name: "navigation"
+    name: "navigation",
+
+    data(){
+      return{
+      drawer:false
+      }
+    }
 }
 </script>
 
 
 <style>
 
-#head {
-  height:45px;
-  border: 2px solid black;
-  border-bottom:5px solid #ed1d25;
-  background: #111;
-}
-
 #nav {
-  width: 1000px;
   margin: 0 auto;
   border: solid 2px black;
-  font-size: 17pt;
-  padding-left: 20px;
-  background: #fff;
+  
 }
 
 #nav a {
