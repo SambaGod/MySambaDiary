@@ -1,16 +1,6 @@
 <template>
   <div>
-    <Sidebar/>
     <v-content>
-      <v-btn
-          v-if="responsive"
-          class="default v-btn--simple"
-          dark
-          icon
-          @click.stop="onClickBtn"
-        >
-          <v-icon>mdi-view-list</v-icon>
-        </v-btn>
       <v-container fluid grid-list-md>
         <v-layout row wrap>
           <v-flex md4 xs12>
@@ -34,18 +24,16 @@
           <p>Welcome, {{ user }}</p>
           <div>Add school leader</div>
           <div>Remove users</div>
-          <div></div>
-          <div></div>
-          <div></div>
+          <AddSchool></AddSchool>
         </div>
       </v-container>
     </v-content>
   </div>
 </template>  
-<script>  
+<script>
+import AddSchool from "@/components/admin/AddSchool"
 import axios from "axios"
 import router from "../router"
-import Sidebar from "@/components/Sidebar"
 
 export default {    
   name: "Login",    
@@ -56,7 +44,7 @@ export default {
     }    
   },
   components: {
-    Sidebar
+    AddSchool
   },
   methods: {
     getUserData: function() { 
