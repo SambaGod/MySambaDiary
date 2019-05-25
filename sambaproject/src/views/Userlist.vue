@@ -1,6 +1,5 @@
 <template>
 <div>
-    <Sidebar></Sidebar>
     <v-content>
       <v-container>
         <h2>Userlist</h2>

@@ -3,6 +3,7 @@
     <h2>Dashboard</h2>    
     <p>Name: {{ user }}</p>
     <b-button v-on:click="logout">Logout</b-button>
+    <router-link v-if="user.isAdmin" to="/admin">Back to admin view</router-link>
   </div>
 </template>  
 <script>  
@@ -19,15 +20,13 @@ export default {
         logout() {
             axios.get("/api/logout")
               .then((response) => {
-                console.log(response)
                 router.push("/")
               })
         },
         getUserData: function() {
             let self = this    
             axios.get("/api/user")    
-              .then((response) => {    
-                console.log(response)    
+              .then((response) => {      
                 self.$set(this, "user", response.data.user)    
               })    
               .catch((errors) => {    

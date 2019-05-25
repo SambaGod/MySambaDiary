@@ -22,8 +22,8 @@
         <div>    
           <h2>Admin</h2>    
           <p>Welcome, {{ user }}</p>
-          <div>Add school leader</div>
-          <div>Remove users</div>
+          <div><router-link to="/dashboard">Switch to user view</router-link></div>
+          <div><router-link to="/admin/users">Manage users</router-link></div>
           <AddSchool></AddSchool>
         </div>
       </v-container>
@@ -50,8 +50,7 @@ export default {
     getUserData: function() { 
       let self = this    
       axios.get("/api/user")    
-        .then((response) => {    
-          console.log(response)    
+        .then((response) => {       
           self.$set(this, "user", response.data.user)    
         })    
         .catch((errors) => {    
@@ -67,7 +66,6 @@ export default {
       }
     },
     onClickBtn() {
-      console.log(this.$store.getters.adminSidebarOpen)
       this.$store.commit('toggleSidebar', true)
       
     }

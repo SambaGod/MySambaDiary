@@ -159,6 +159,28 @@ app.post("/api/addschool", (req, res, next) =>{
   })
 })
 
+app.post("/api/changeAdmin", (req, res, next) =>{
+  console.log("trying to change admin")
+  console.log(req.body)
+  connection.query("UPDATE mylogin SET isAdmin = ? WHERE id = ?", [req.body.value, req.body.id], function(err, rows) {
+    if (err) {
+      res.send(err)
+    }
+      res.send("Succesful update!")
+  })
+})
+
+app.post("/api/deleteUser", (req, res, next) =>{
+  console.log("trying to delete user")
+  console.log(req.body)
+  connection.query("DELETE FROM mylogin WHERE id = ?", req.body.id, function(err, rows) {
+    if (err) {
+      res.send(err)
+    }
+      res.send("Succeesful delete!")
+  })
+})
+
 app.get("/api/users", authMiddleware, (req, res) => {
   connection.query("SELECT id, email, name, isAdmin FROM mylogin", function(err, rows){
     console.log("momo")
