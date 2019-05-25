@@ -104,7 +104,7 @@ app.post("/api/register", (req, res, next) =>{
         isAdmin: 0
       }
       connection.query("INSERT INTO mylogin (name, password, email, isAdmin) VALUES (?,?,?,?)", [newUser.name, newUser.password, newUser.email, newUser.isAdmin], function(err, rows) {
-        res.send("lisätty!")
+        res.send("You have been successfully registered!")
       })
     }
   })
@@ -127,6 +127,36 @@ app.get("/api/user", authMiddleware, (req, res) => {
     console.log(rows[0])
     res.send({ user: rows[0] })
   });
+})
+
+app.post("/api/addschool", (req, res, next) =>{
+  console.log("trying to add school")
+  console.log(req.body)
+  connection.query("INSERT INTO school (name, city, country) VALUES (?,?,?)", [req.body.name, req.body.city, req.body.country], function(err, school) {
+    console.log(school)
+    connection.query("SELECT * FROM mylogin WHERE email = ?", req.body.email, function(err, schoolUser) {
+      if (err) {
+        res.send(err)
+      }
+      if (schoolUser.length) {
+        res.send("Email is already taken, updating the school value")
+        connection.query("UPDATE mylogin SET school = ? WHERE id = ?", [school.insertId, schoolUser[0].id], function(err, rows) {
+          console.log("user updated")
+        })
+      } else {
+        var newUser = {
+          name: req.body.name,
+          password: bcrypt.hashSync("aaa", null, null),
+          email: req.body.email,
+          isAdmin: 0,
+          school: school.insertId
+        }
+        connection.query("INSERT INTO mylogin (name, password, email, isAdmin, school) VALUES (?,?,?,?,?)", [newUser.name, newUser.password, newUser.email, newUser.isAdmin, newUser.school], function(err, rows) {
+          res.send("You have been successfully registered!")
+        })
+      }
+    })
+  })
 })
 
 app.get("/api/users", authMiddleware, (req, res) => {
