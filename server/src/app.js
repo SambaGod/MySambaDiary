@@ -42,18 +42,15 @@ passport.use(
         if (err)
           return done(err);
         if (!rows.length) {
-          console.log("ei useria");
           return done(null, false, {message: 'No user found.'});           
         }
 
         // if the user is found but the password is wrong
         if (!bcrypt.compareSync(password, rows[0].password)) {
-          console.log("väärä salis");
           return done(null, false, {message: 'Wrong password'});
         }
                     
         // all is well, return successful user
-        console.log(rows[0]);
         return done(null, rows[0]);
       })
     }
@@ -66,7 +63,6 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser((id, done) => {
   connection.query("SELECT id, email, name, isAdmin FROM mylogin WHERE id = ? ",[id], function(err, rows){
-    console.log(rows[0])
     done(err, rows[0]);
   });
 })
@@ -89,7 +85,6 @@ app.post("/api/login", (req, res, next) => {
 
 app.post("/api/register", (req, res, next) =>{
   console.log("trying to register")
-  console.log(req.body)
   connection.query("SELECT * FROM mylogin WHERE email = ?", req.body.email, function(err, rows) {
     if (err) {
       res.send(err)
@@ -101,9 +96,11 @@ app.post("/api/register", (req, res, next) =>{
         name: req.body.name,
         password: bcrypt.hashSync(req.body.password, null, null),
         email: req.body.email,
-        isAdmin: 0
+        isAdmin: req.body.isAdmin
       }
-      connection.query("INSERT INTO mylogin (name, password, email, isAdmin) VALUES (?,?,?,?)", [newUser.name, newUser.password, newUser.email, newUser.isAdmin], function(err, rows) {
+      var date = new Date();
+      var registrationDate = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
+      connection.query("INSERT INTO mylogin (name, password, email, registrationdate, isAdmin) VALUES (?,?,?,?,?)", [newUser.name, newUser.password, newUser.email, registrationDate, newUser.isAdmin], function(err, rows) {
         res.send("You have been successfully registered!")
       })
     }
@@ -124,16 +121,26 @@ const authMiddleware = (req, res, next) => {
 
 app.get("/api/user", authMiddleware, (req, res) => {
   connection.query("SELECT id, email, name, isAdmin FROM mylogin WHERE id = ? ",[req.session.passport.user], function(err, rows){
-    console.log(rows[0])
     res.send({ user: rows[0] })
   });
 })
 
+app.get("/api/newUsers", authMiddleware, (req, res) => {
+  connection.query("SELECT COUNT(*) as newUsers FROM mylogin WHERE registrationdate > NOW() - INTERVAL 7 DAY ", function(err, rows){
+    res.send({ newUsers: rows[0] })
+  });
+})
+
+app.get("/api/latestLogins", authMiddleware, (req, res) => {
+  connection.query("SELECT COUNT(*) as newUsers FROM mylogin WHERE registrationdate > NOW() - INTERVAL 7 DAY ", function(err, rows){
+    res.send({ newUsers: rows[0] })
+  });
+})
+
+
 app.post("/api/addschool", (req, res, next) =>{
   console.log("trying to add school")
-  console.log(req.body)
   connection.query("INSERT INTO school (name, city, country) VALUES (?,?,?)", [req.body.name, req.body.city, req.body.country], function(err, school) {
-    console.log(school)
     connection.query("SELECT * FROM mylogin WHERE email = ?", req.body.email, function(err, schoolUser) {
       if (err) {
         res.send(err)
@@ -161,7 +168,6 @@ app.post("/api/addschool", (req, res, next) =>{
 
 app.post("/api/changeAdmin", (req, res, next) =>{
   console.log("trying to change admin")
-  console.log(req.body)
   connection.query("UPDATE mylogin SET isAdmin = ? WHERE id = ?", [req.body.value, req.body.id], function(err, rows) {
     if (err) {
       res.send(err)
@@ -172,7 +178,6 @@ app.post("/api/changeAdmin", (req, res, next) =>{
 
 app.post("/api/deleteUser", (req, res, next) =>{
   console.log("trying to delete user")
-  console.log(req.body)
   connection.query("DELETE FROM mylogin WHERE id = ?", req.body.id, function(err, rows) {
     if (err) {
       res.send(err)
@@ -183,7 +188,6 @@ app.post("/api/deleteUser", (req, res, next) =>{
 
 app.get("/api/users", authMiddleware, (req, res) => {
   connection.query("SELECT id, email, name, isAdmin FROM mylogin", function(err, rows){
-    console.log("momo")
     res.send({ users: rows })
   });
 })

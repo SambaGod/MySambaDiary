@@ -5,9 +5,9 @@
         <v-layout row wrap>
           <v-flex md4 xs12>
             <v-card color="primary">
-              <v-card-text class="px-0"><h2>New registered users</h2></v-card-text>
-                </v-card>
-              </v-flex>
+              <v-card-text class="px-0"><NewUsers></NewUsers></v-card-text>
+            </v-card>
+          </v-flex>
           <v-flex md4 xs12>
             <v-card color="primary">
               <v-card-text class="px-0"><h2>Events</h2></v-card-text>
@@ -32,6 +32,7 @@
 </template>  
 <script>
 import AddSchool from "@/components/admin/AddSchool"
+import NewUsers from "@/components/admin/NewUsers"
 import axios from "axios"
 import router from "../router"
 
@@ -44,7 +45,8 @@ export default {
     }    
   },
   components: {
-    AddSchool
+    AddSchool,
+    NewUsers
   },
   methods: {
     getUserData: function() { 

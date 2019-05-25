@@ -1,25 +1,22 @@
 <template>  
     <div>
-      <v-container>
-        <v-card class="loginForm">
-        <v-parallax :src="samba">
-        <h2>Register</h2>
-        <v-form @submit="login" ref="form">
-            <v-text-field v-model="email" label="Email" color="#FFFFFF" dark></v-text-field>
-            <v-text-field v-model="name" label="Name" color="#FFFFFF" dark></v-text-field>
-            <v-text-field v-model="password" label="Password" color="#FFFFFF" dark type="password"></v-text-field>
-            <v-btn type="submit">Register!</v-btn>    
+      <h2>Register a new user</h2>
+      <v-card >
+        <v-form @submit="addUser" ref="form">
+            <v-text-field v-model="name" label="Name"></v-text-field>
+            <v-text-field v-model="email" label="Email"></v-text-field>
+            <v-text-field v-model="password" label="Password"></v-text-field>
+            <v-checkbox
+               v-model="checkbox"
+               :label="'Give admin rights'"
+            ></v-checkbox>
+            <v-btn type="submit">Register a new user!</v-btn>  
         </v-form>
-        </v-parallax>
-        </v-card>
-      </v-container>
+      </v-card>
     </div>
 </template>
-
-<script>
-import router from "../router"    
+<script> 
 import axios from "axios"
-import loginPicture from "@/assets/bateria.jpg"
 
   export default {
     name: "Login",
@@ -28,22 +25,23 @@ import loginPicture from "@/assets/bateria.jpg"
         email: "",
         name: "",
         password: "",
-        samba: loginPicture
+        checkbox: false
       }
     },
     methods: {    
-    login: (e) => {
+    addUser: (e) => {
       e.preventDefault()
       console.log(e)
       let email = e.target[0].value
       let username = e.target[1].value
       let password = e.target[2].value
+      let isAdmin = e.target[3].checked
       let login = () => {
         let data = {
           email: email,
           name: username,
           password: password,
-          isAdmin: 0
+          isAdmin: isAdmin
         }
         console.log(data)
         axios.post("/api/register", data)
