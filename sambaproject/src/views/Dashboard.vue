@@ -5,6 +5,10 @@
       <p>Name: {{ user }}</p>
       <v-btn v-on:click="logout">Logout</v-btn>
       <router-link v-if="user.isAdmin" to="/admin">Back to admin view</router-link>
+      <v-btn>Update information</v-btn>
+      <v-btn>Write article</v-btn>
+      <v-btn>Browse events</v-btn>
+      
       <School v-if="user.school" :schoolId="user.school"></School>
       </v-container>
   </div>

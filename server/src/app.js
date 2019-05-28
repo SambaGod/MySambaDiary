@@ -198,6 +198,11 @@ app.get("/api/users", authMiddleware, (req, res) => {
     res.send({ users: rows })
   });
 })
+app.get("/api/schools", authMiddleware, (req, res) => {
+  connection.query("SELECT * FROM school", function(err, rows){
+    res.send({ schools: rows })
+  });
+})
 
 app.get("/api/logout", function(req, res) {  
   req.logout();

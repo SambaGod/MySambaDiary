@@ -1,13 +1,22 @@
 <template>
 <div>
-    <v-card>
-        <div>Your samba school</div>
-        <h2>{{school.name}}</h2>
+    <v-card color="#d3d3d3">
+        <v-card-actions>
+            <h2>{{school.name}}</h2>
+            <v-spacer></v-spacer>
+            <v-btn v-if="visible" flat icon right @click="toggleSchoolVisible(false)"><v-icon>close</v-icon></v-btn>
+            <v-btn v-else flat icon right @click="toggleSchoolVisible(true)"><v-icon>expand_more</v-icon></v-btn>
+        </v-card-actions>
+        <v-card-title v-if="visible">
         <h4>{{school.country}}</h4>
         <country-flag :country="countrycode"/>
-        <v-btn>Manage events</v-btn>
-        <v-btn>Update information</v-btn>
-        <v-btn>Write an article</v-btn>
+        </v-card-title>
+        <v-card-actions v-if="visible">
+            <v-btn>Manage events</v-btn>
+            <v-btn>Update information</v-btn>
+            <v-btn>Write an article</v-btn>
+            <v-btn>See statistics</v-btn>
+        </v-card-actions>
     </v-card>
 </div>
 </template>
@@ -23,7 +32,8 @@ export default {
         return {
             id: this.schoolId,
             school: {},
-            countrycode: ""
+            countrycode: "",
+            visible: true
         }
     },
     name: "School",
@@ -52,6 +62,9 @@ export default {
         },
         getCountry(name) {
             this.countrycode = this.$store.getters.countries[name]
+        },
+        toggleSchoolVisible(value) {
+            this.visible = value
         }
     },
     mounted() {

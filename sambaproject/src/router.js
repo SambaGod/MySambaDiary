@@ -7,6 +7,7 @@ import Register from './views/Register.vue'
 import Dashboard from './views/Dashboard.vue'
 import Admin from './views/Admin.vue'
 import Userlist from './views/Userlist.vue'
+import Schoollist from './views/Schoollist.vue'
 import Guest from './views/Guest.vue'
 import axios from "axios"
 
@@ -79,6 +80,30 @@ export default new Router({
       path: "/admin/users",
       name: "Adminusers",
       component: Userlist,
+      beforeEnter: (to, from, next) => {
+        axios.get("/api/user")    
+          .then((response) => {
+            console.log(response.data.user)
+            if (response.data.user.isAdmin) {
+              next()
+            } else {
+              next({
+                path: '/dashboard'
+              }) 
+            }
+          })
+          .catch((errors) => {    
+            console.log(errors)    
+            next({
+              path: '/login'
+             })   
+          })   
+      }
+    },
+    {
+      path: "/admin/schools",
+      name: "Adminschools",
+      component: Schoollist,
       beforeEnter: (to, from, next) => {
         axios.get("/api/user")    
           .then((response) => {

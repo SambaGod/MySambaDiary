@@ -24,14 +24,13 @@
           <p>Welcome, {{ user }}</p>
           <div><router-link to="/dashboard">Switch to user view</router-link></div>
           <div><router-link to="/admin/users">Manage users</router-link></div>
-          <AddSchool></AddSchool>
+          <div><router-link to="/admin/schools">Manage schools</router-link></div>
         </div>
       </v-container>
     </v-content>
   </div>
 </template>  
 <script>
-import AddSchool from "@/components/admin/AddSchool"
 import NewUsers from "@/components/admin/NewUsers"
 import axios from "axios"
 import router from "../router"
@@ -45,7 +44,6 @@ export default {
     }    
   },
   components: {
-    AddSchool,
     NewUsers
   },
   methods: {
