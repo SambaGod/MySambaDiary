@@ -6,7 +6,15 @@
             <v-text-field v-model="name" label="Name"></v-text-field>
             <v-text-field v-model="email" label="Email"></v-text-field>
             <v-text-field v-model="city" label="City"></v-text-field>
-            <v-text-field v-model="country" label="Country" ></v-text-field>
+            <v-autocomplete
+              :items="countries"
+              label="Select country"
+              v-model="country"
+              attach
+              item-text="name"
+              item-value="code"
+              return-object
+            ></v-autocomplete>
             <v-btn type="submit">Add school!</v-btn>  
         </v-form>
         </v-card>
@@ -27,13 +35,14 @@ export default {
         }
     },
     methods: {
-    addSchool: (e) => {
-      e.preventDefault()
-      console.log(e)
-      let name = e.target[0].value
-      let email = e.target[1].value
-      let city = e.target[2].value
-      let country = e.target[3].value
+      addSchool: (e) => {
+        e.preventDefault()
+        console.log(e)
+        let name = e.target[0].value
+        let email = e.target[1].value
+        let city = e.target[2].value
+        let country = e.target[3].value
+        console.log(country)
       let login = () => {
         let data = {
           email: email,
@@ -53,6 +62,17 @@ export default {
       }    
       login()
     }    
-  }    
+  },
+  computed: {
+    countries() {
+      var countries = this.$store.getters.countries
+      var countryArray = []
+      for (var country in countries) {
+        var countryObject = {code: countries[country], name: country}
+        countryArray.push(countryObject)
+      }
+      return countryArray
+    }
+  }
 }
 </script>

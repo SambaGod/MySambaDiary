@@ -31,7 +31,6 @@ import axios from "axios"
     methods: {    
     addUser: (e) => {
       e.preventDefault()
-      console.log(e)
       let email = e.target[0].value
       let username = e.target[1].value
       let password = e.target[2].value

@@ -6,21 +6,22 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     user: {},
-    adminSidebarOpen: false,
+    country: {}
   },
   mutations: {
     welcomeUser(state, loggedInUser) {
       state.user = loggedInUser
     },
-    toggleSidebar(state, toggleSB) {
-      state.adminSidebarOpen = toggleSB
+    addCountry(state, c) {
+      state.country[c.name] = c.code
     }
+
   },
   actions: {
 
   },
   getters: {
     user: state => state.user,
-    adminSidebarOpen: state => state.adminSidebarOpen
+    countries: state => state.country
   }
 })
