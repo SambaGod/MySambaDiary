@@ -1,6 +1,5 @@
 <template>
 <div>
-    <v-container>
         <v-card >
         <h2>Register a samba school</h2>
         <v-form @submit="addSchool" ref="form">
@@ -11,7 +10,6 @@
             <v-btn type="submit">Add school!</v-btn>  
         </v-form>
         </v-card>
-      </v-container>
 </div>
 </template>
 <script> 

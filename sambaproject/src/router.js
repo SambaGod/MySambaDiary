@@ -81,7 +81,8 @@ export default new Router({
       component: Userlist,
       beforeEnter: (to, from, next) => {
         axios.get("/api/user")    
-          .then((response) => {    
+          .then((response) => {
+            console.log(response.data.user)
             if (response.data.user.isAdmin) {
               next()
             } else {

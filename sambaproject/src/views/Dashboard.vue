@@ -1,12 +1,16 @@
 <template>  
-  <div>    
-    <h2>Dashboard</h2>    
-    <p>Name: {{ user }}</p>
-    <b-button v-on:click="logout">Logout</b-button>
-    <router-link v-if="user.isAdmin" to="/admin">Back to admin view</router-link>
+  <div>
+    <v-container fluid>
+      <h2>Dashboard</h2>    
+      <p>Name: {{ user }}</p>
+      <v-btn v-on:click="logout">Logout</v-btn>
+      <router-link v-if="user.isAdmin" to="/admin">Back to admin view</router-link>
+      <School v-if="user.school" :schoolId="user.school"></School>
+      </v-container>
   </div>
 </template>  
-<script>  
+<script>
+import School from "@/components/School.vue"
 import axios from "axios"
 import router from "../router"    
 export default {    
@@ -15,7 +19,10 @@ export default {
       return {    
         user: {}    
       }    
-    },    
+    },
+    components: {
+      School
+    },
     methods: {
         logout() {
             axios.get("/api/logout")

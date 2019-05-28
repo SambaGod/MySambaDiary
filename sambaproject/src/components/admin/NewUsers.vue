@@ -1,7 +1,7 @@
 <template>
 <div>
-    <h2>New registered users</h2>
-    <div>{{data.newUsers}}</div>
+    <div>New registered users from last week</div>
+    <h2>{{data.newUsers}}</h2>
 </div>
 </template>
 <script>

@@ -57,7 +57,7 @@ passport.use(
   )
 )
 
-passport.serializeUser((user, done) => {  
+passport.serializeUser((user, done) => {
   done(null, user.id)
 })
 
@@ -120,8 +120,15 @@ const authMiddleware = (req, res, next) => {
 }
 
 app.get("/api/user", authMiddleware, (req, res) => {
-  connection.query("SELECT id, email, name, isAdmin FROM mylogin WHERE id = ? ",[req.session.passport.user], function(err, rows){
+  connection.query("SELECT id, email, name, isAdmin, school FROM mylogin WHERE id = ? ",[req.session.passport.user], function(err, rows){
     res.send({ user: rows[0] })
+  });
+})
+
+app.get("/api/school/", authMiddleware, (req, res) => {
+  console.log(req.query.id)
+  connection.query("SELECT * FROM school WHERE id = ?", req.query.id, function(err, rows){
+    res.send({ school: rows[0] })
   });
 })
 
