@@ -47,7 +47,7 @@ export default {
     NewUsers
   },
   methods: {
-    getUserData: function() { 
+    getUserData: function() {
       let self = this    
       axios.get("/api/user")    
         .then((response) => {

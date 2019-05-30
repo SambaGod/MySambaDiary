@@ -198,6 +198,20 @@ app.get("/api/users", authMiddleware, (req, res) => {
     res.send({ users: rows })
   });
 })
+
+app.post("/api/updateUser", authMiddleware, (req, res) => {
+  if (req.body.password.length > 0) {
+    var password = bcrypt.hashSync(req.body.password, null, null)
+    connection.query("UPDATE mylogin SET name = ?, email = ?, password = ? WHERE id = ?", [req.body.name, req.body.email, password, req.body.id], function(err, rows){
+      if (err)
+        res.send(err)
+
+      res.send("Successful update!")
+    });
+  }
+  
+})
+
 app.get("/api/schools", authMiddleware, (req, res) => {
   connection.query("SELECT * FROM school", function(err, rows){
     res.send({ schools: rows })
