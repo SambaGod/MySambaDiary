@@ -3,16 +3,22 @@
       <v-container>
         <v-card class="loginForm">
         <v-parallax :src="samba">
-        <h2>Register</h2>
-        <v-form @submit="login" ref="form">
-            <v-text-field v-model="email" label="Email" color="#FFFFFF" dark></v-text-field>
-            <v-text-field v-model="name" label="Name" color="#FFFFFF" dark></v-text-field>
+        <h2 v-if="showForm">Register</h2>
+        <v-form v-if="showForm" @submit="register" ref="form">
+            <v-text-field v-model="email" label="Email" color="#FFFFFF" hint="Email is used for ideentification" dark></v-text-field>
+            <v-text-field v-model="name" label="Username" color="#FFFFFF" hint="Come up with catchy username" dark></v-text-field>
             <v-text-field v-model="password" label="Password" color="#FFFFFF" dark type="password"></v-text-field>
             <v-btn type="submit">Register!</v-btn>    
         </v-form>
+        <div v-else>
+          <h2>{{email}}</h2>
+          <div>{{successText}}</div>
+          <div>You may now continue to <router-link to="/login">login page</router-link></div>
+          </div>
         </v-parallax>
         </v-card>
       </v-container>
+      
     </div>
 </template>
 
@@ -28,34 +34,32 @@ import loginPicture from "@/assets/bateria.jpg"
         email: "",
         name: "",
         password: "",
-        samba: loginPicture
+        samba: loginPicture,
+        showForm: true,
+        successText: ""
       }
     },
     methods: {    
-    login: (e) => {
+    register(e) {
       e.preventDefault()
       console.log(e)
-      let email = e.target[0].value
-      let username = e.target[1].value
-      let password = e.target[2].value
-      let login = () => {
         let data = {
-          email: email,
-          name: username,
-          password: password,
+          email: this.email,
+          name: this.name,
+          password: this.password,
           isAdmin: 0
         }
         console.log(data)
         axios.post("/api/register", data)
           .then((response) => {
             console.log(response)
+            this.showForm = false
+            this.successText = response.data
           })
           .catch((errors) => {
             console.log(errors)
             console.log("Cannot log in")
           })
-      }    
-      login()
     }    
     }    
   }

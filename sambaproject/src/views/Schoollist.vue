@@ -1,5 +1,6 @@
 <template>
 <v-container fluid>
+    <h1>Schools</h1>
     <Schooltable></Schooltable>
     <AddSchool></AddSchool>
 </v-container>

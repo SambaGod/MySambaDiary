@@ -13,6 +13,23 @@
         </v-parallax>
         </v-card>
       </v-container>
+      <v-snackbar
+      v-model="snackbar"
+      :multi-line="'multi-line'"
+      :right="'right'"
+      :timeout="timeout"
+      :top="'top'"
+      :color="'pink'"
+    >
+      {{ snackbarText }}
+      <v-btn
+        color="white"
+        flat icon
+        @click="snackbar = false"
+      >
+        <v-icon>clear</v-icon>
+      </v-btn>
+    </v-snackbar>
     </div>
 </template>
 
@@ -26,15 +43,17 @@
       return {
         email: "",
         password: "",
-        samba: loginPicture
+        samba: loginPicture,
+        snackbar: false,
+        snackbarText: "",
+        timeout: 6000
       }
     },
     methods: {    
-    login: (e) => {
+    login(e) {
       e.preventDefault()
       let email = e.target[0].value
       let password = e.target[1].value
-      let login = () => {
         let data = {
           email: email,
           password: password
@@ -59,10 +78,9 @@
           })
           .catch((errors) => {
             console.log(errors)
-            console.log("Cannot log in")
+            this.snackbar = true
+            this.snackbarText = "Wrong credentials! Maybe try again?"
           })
-      }    
-      login()
     }    
     }    
   }

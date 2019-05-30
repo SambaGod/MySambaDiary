@@ -17,6 +17,23 @@
       </td>
     </template>
   </v-data-table>
+  <v-snackbar
+      v-model="snackbar"
+      :multi-line="'multi-line'"
+      :right="'right'"
+      :timeout="timeout"
+      :top="'top'"
+      :color="'pink'"
+    >
+      {{ snackbarText }}
+      <v-btn
+        color="white"
+        flat icon
+        @click="snackbar = false"
+      >
+        <v-icon>clear</v-icon>
+      </v-btn>
+    </v-snackbar>
   </div>
 </template>
 <script>
@@ -33,7 +50,10 @@ export default {
               {text: "Admin", value: "isAdmin", sortable: true},
               {text: "Actions", value: "actions"}
             ],
-            users: []
+            users: [],
+            timeout: 6000,
+            snackbar: false,
+            snackbarText: ""
         }
     },
     methods: {
@@ -58,6 +78,8 @@ export default {
             axios.post("/api/changeAdmin", data)
               .then((response) => {
                 console.log(response)
+                this.snackbar = true
+                this.snackbarText = response.data
                 this.getUserData()
               })
               .catch((errors) => {
@@ -75,6 +97,8 @@ export default {
 
             axios.post("/api/deleteUser", data)
               .then((response) => {
+                this.snackbar = true
+                this.snackbarText = response.data
                 console.log(response)
                 this.getUserData()
               })
