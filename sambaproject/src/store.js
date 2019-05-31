@@ -13,7 +13,7 @@ export default new Vuex.Store({
       state.user = loggedInUser
     },
     addCountry(state, c) {
-      state.country[c.name] = c.code
+      state.country[c.code] = c.name
     }
 
   },

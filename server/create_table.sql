@@ -9,7 +9,7 @@ CREATE TABLE `school` (
   `registrationdate` date DEFAULT NULL,
   PRIMARY KEY (`id`));
 
-  DROP TABLE IF EXISTS `school`;
+DROP TABLE IF EXISTS `school`;
 
 CREATE TABLE `mylogin` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -21,7 +21,9 @@ CREATE TABLE `mylogin` (
   `school` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `school` (`school`),
-  CONSTRAINT `mylogin_ibfk_1` FOREIGN KEY (`school`) REFERENCES `school` (`id`)
+  CONSTRAINT `mylogin_ibfk_1` FOREIGN KEY (`school`) REFERENCES `school` (`id`));
+
+DROP TABLE IF EXISTS `event`;
 
 CREATE TABLE `event` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

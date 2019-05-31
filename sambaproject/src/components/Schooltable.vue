@@ -8,7 +8,7 @@
   >
     <template v-slot:items="props">
       <td>{{ props.item.id }}</td>
-      <td><country-flag :country="$store.getters.countries[props.item.country]"/></td>
+      <td><country-flag :country="props.item.country"/></td>
        <td>{{ props.item.name }}</td>
       <td>{{ props.item.email }}</td>
       <td>
@@ -42,6 +42,7 @@ export default {
             let self = this    
             axios.get("/api/schools")  
               .then((response) => {
+                console.log(response.data.schools)
                 self.$set(this, "schools", response.data.schools)
               })
               .catch((errors) => {

@@ -114,7 +114,7 @@ export default {
       var countries = this.$store.getters.countries
       var countryArray = []
       for (var country in countries) {
-        var countryObject = {code: countries[country], name: country}
+        var countryObject = {name: countries[country], code: country}
         countryArray.push(countryObject)
       }
       return countryArray

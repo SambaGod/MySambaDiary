@@ -9,7 +9,7 @@
         </v-card-actions>
         <v-card-title v-if="visible">
         <h4>{{school.country}}</h4>
-        <country-flag :country="countrycode"/>
+        <country-flag :country="school.country"/>
         </v-card-title>
         <v-card-actions v-if="visible">
             <router-link to="/school/eventmanagement">Manage events</router-link>
@@ -32,7 +32,6 @@ export default {
         return {
             id: this.schoolId,
             school: {},
-            countrycode: "",
             visible: true
         }
     },
@@ -49,15 +48,11 @@ export default {
             })
               .then((response) => {
                 this.school = response.data.school
-                this.getCountry(response.data.school.country)
               })
               .catch((errors) => {
                 console.log(errors)
                 router.push("/")
               })
-        },
-        getCountry(name) {
-            this.countrycode = this.$store.getters.countries[name]
         },
         toggleSchoolVisible(value) {
             this.visible = value

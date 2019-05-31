@@ -35,20 +35,17 @@ export default {
         }
     },
     methods: {
-      addSchool: (e) => {
+      addSchool(e) {
         e.preventDefault()
         console.log(e)
         let name = e.target[0].value
         let email = e.target[1].value
         let city = e.target[2].value
-        let country = e.target[3].value
-        console.log(country)
-      let login = () => {
         let data = {
           email: email,
           name: name,
           city: city,
-          country: country
+          country: this.country.code
         }
         console.log(data)
         axios.post("/api/addschool", data)
@@ -59,8 +56,6 @@ export default {
             console.log(errors)
             console.log("Cannot log in")
           })
-      }    
-      login()
     }    
   },
   computed: {
@@ -68,7 +63,7 @@ export default {
       var countries = this.$store.getters.countries
       var countryArray = []
       for (var country in countries) {
-        var countryObject = {code: countries[country], name: country}
+        var countryObject = {code: country, name: countries[country]}
         countryArray.push(countryObject)
       }
       return countryArray
