@@ -221,6 +221,30 @@ app.post("/api/addEvent", (req, res, next) =>{
   })
 })
 
+app.get("/api/eventsBySchool", authMiddleware, (req, res) => {
+  console.log(req.query.id)
+  connection.query("SELECT * FROM event WHERE organizer = ?", req.query.id, function(err, rows){
+    res.send({ events: rows })
+  });
+})
+
+app.post("/api/publishEvent", (req, res, next) =>{
+  console.log("trying to publish event")
+  console.log(req.body)
+  connection.query("UPDATE event SET published = 1  WHERE id = ?", req.body.event, function(err, rows) {
+    if (err) {
+      res.send(err)
+    }
+      res.send("Event published!")
+  })
+})
+
+app.get("/api/events", authMiddleware, (req, res) => {
+  connection.query("SELECT * FROM event WHERE published = 1", function(err, rows){
+    res.send({ events: rows })
+  });
+})
+
 app.get("/api/schools", authMiddleware, (req, res) => {
   connection.query("SELECT * FROM school", function(err, rows){
     res.send({ schools: rows })

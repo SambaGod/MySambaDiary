@@ -29,10 +29,10 @@ export default {
         return {
             headers: [
               {text: "id", value: "id"}, 
-              {text: "Flag", value: "flag"},
+              {text: "Country", value: "country"},
               {text: "Name", value: "name", sortable: true},
               {text: "Email", value: "email", sortable: true},
-              {text: "Actions", value: "actions"}
+              {text: "Actions", value: "actions", sortable: false}
             ],
             schools: []
         }

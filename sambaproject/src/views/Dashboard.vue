@@ -7,7 +7,7 @@
       <router-link v-if="user.isAdmin" to="/admin">Back to admin view</router-link>
       <router-link to="/settings">Update information</router-link>
       <v-btn>Write article</v-btn>
-      <v-btn>Browse events</v-btn>
+      <router-link to="/events">Browse events</router-link>
       </v-container>
       <School class="schoolpanel" v-if="user.school" :schoolId="user.school"></School>
   </div>
@@ -33,7 +33,7 @@ export default {
                 router.push("/")
               })
         },
-        getUserData() {  
+        getUserData() { 
             axios.get("/api/user")    
               .then((response) => {      
                 this.user = response.data.user

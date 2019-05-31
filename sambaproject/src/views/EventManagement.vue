@@ -67,10 +67,29 @@
             <v-btn type="submit">Register!</v-btn>    
         </v-form>
     </v-card>
+    <v-card>
+    <v-data-table
+    :headers="headers"
+    :items="events"
+    class="elevation-1"
+  >
+    <template v-slot:items="props">
+      <td>{{ props.item.id }}</td>
+      <td><country-flag :country="props.item.country"/></td>
+      <td>{{ props.item.name }}</td>
+      <td>{{ props.item.fee }} €</td>
+      <td>
+        <v-btn v-on:click="publishEvent(props.item.id)" flat icon><v-icon>publish</v-icon></v-btn>
+      </td>
+    </template>
+  </v-data-table>
+    </v-card>
 </v-container>
 </template>
 <script>
 import axios from "axios"
+import CountryFlag from 'vue-country-flag'
+
 export default {
     name: "EventManagement",
     data() {
@@ -81,13 +100,33 @@ export default {
             fee: 0,
             deadline: "",
             enddate: "",
-            startdate: ""
+            startdate: "",
+            events: [],
+            headers: [
+              {text: "id", value: "id"}, 
+              {text: "Country", value: "country"},
+              {text: "Name", value: "name", sortable: true},
+              {text: "Fee", value: "fee", sortable: true},
+              {text: "Actions", value: "actions", sortable: false}
+            ],
+            user: {}
         }
     },
     mounted() {
-        //this.getEvents()
+        this.getData()
     },
     methods: {
+        getData() {
+            axios.get("/api/user")
+              .then((response) => {
+                this.user = response.data.user
+                this.getEvents()
+              })    
+              .catch((errors) => {
+                console.log(errors)
+                router.push("/")
+              })
+        },
         registerEvent(e) {
         e.preventDefault()
         let data = {
@@ -97,7 +136,7 @@ export default {
           startdate: this.startdate,
           enddate: this.enddate,
           fee: this.fee,
-          school: this.$store.getters.user.school
+          school: this.user.id
         }
         console.log(data)
         axios.post("/api/addEvent", data)
@@ -107,7 +146,37 @@ export default {
           .catch((errors) => {
             console.log(errors)
           })
-    }   
+        },
+        getEvents() {
+            console.log(this.user)
+            axios.get("/api/eventsBySchool", {
+                params: {
+                    id: this.user.school
+                }
+            }) 
+            .then((response) => {
+                console.log(this.user.school)
+                this.events = response.data.events
+                console.log(response.data.events)
+            })
+            .catch((errors) => {
+                console.log(errors)
+                router.push("/")
+            })
+        },
+        publishEvent(eventId) {
+            let data = {
+               event: eventId
+            }
+            console.log(data)
+            axios.post("/api/publishEvent", data)
+                .then((response) => {
+                    console.log(response)
+                })
+                .catch((errors) => {
+                    console.log(errors)
+                })
+        }
     },
     computed: {
     countries() {
@@ -119,6 +188,9 @@ export default {
       }
       return countryArray
     }
+  },
+  components: {
+      CountryFlag
   }
 }
 </script>

@@ -11,6 +11,7 @@ import Schoollist from './views/Schoollist.vue'
 import Guest from './views/Guest.vue'
 import userSettings from './views/Settings'
 import Eventmanagement from './views/EventManagement'
+import Events from './views/Events'
 import axios from "axios"
 
 Vue.use(Router)
@@ -162,5 +163,10 @@ export default new Router({
           })   
       }
     },
+    {
+      path: '/events',
+      name: 'Events',
+      component: Events
+    }
   ]
 })

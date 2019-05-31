@@ -25,6 +25,7 @@
           <div><router-link to="/dashboard">Switch to user view</router-link></div>
           <div><router-link to="/admin/users">Manage users</router-link></div>
           <div><router-link to="/admin/schools">Manage schools</router-link></div>
+          <v-btn v-on:click="logout">Logout</v-btn>
         </div>
       </v-container>
     </v-content>
@@ -47,6 +48,12 @@ export default {
     NewUsers
   },
   methods: {
+    logout() {
+      axios.get("/api/logout")
+        .then((response) => {
+          router.push("/")
+        })
+    },
     getUserData: function() {
       let self = this    
       axios.get("/api/user")    
