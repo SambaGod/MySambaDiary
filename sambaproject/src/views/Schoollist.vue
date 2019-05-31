@@ -1,8 +1,10 @@
 <template>
-<v-container fluid>
+<v-container fluid grid-list-md>
     <h1>Schools</h1>
-    <Schooltable></Schooltable>
-    <AddSchool></AddSchool>
+    <v-layout row wrap>
+        <v-flex><Schooltable></Schooltable></v-flex>
+        <v-flex><AddSchool></AddSchool></v-flex>
+    </v-layout>
 </v-container>
 </template>
 <script>

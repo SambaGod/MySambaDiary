@@ -125,8 +125,7 @@ app.get("/api/user", authMiddleware, (req, res) => {
   });
 })
 
-app.get("/api/school/", authMiddleware, (req, res) => {
-  console.log(req.query.id)
+app.get("/api/school", authMiddleware, (req, res) => {
   connection.query("SELECT * FROM school WHERE id = ?", req.query.id, function(err, rows){
     res.send({ school: rows[0] })
   });
@@ -209,7 +208,17 @@ app.post("/api/updateUser", authMiddleware, (req, res) => {
       res.send("Successful update!")
     });
   }
-  
+})
+
+app.post("/api/addEvent", (req, res, next) =>{
+  console.log("trying to add event")
+  console.log(req.body)
+  connection.query("INSERT INTO event (name, country, city, startdate, enddate, fee, organizer, published) VALUES (?,?,?,?,?,?,?,?)", [req.body.name, req.body.country, req.body.city, req.body.startdate, req.body.enddate, req.body.fee, req.body.school, 0], function(err, rows) {
+    if (err) {
+      res.send(err)
+    }
+      res.send("Event added!")
+  })
 })
 
 app.get("/api/schools", authMiddleware, (req, res) => {

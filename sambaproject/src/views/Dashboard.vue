@@ -8,9 +8,8 @@
       <router-link to="/settings">Update information</router-link>
       <v-btn>Write article</v-btn>
       <v-btn>Browse events</v-btn>
-      
-      <School v-if="user.school" :schoolId="user.school"></School>
       </v-container>
+      <School class="schoolpanel" v-if="user.school" :schoolId="user.school"></School>
   </div>
 </template>  
 <script>
@@ -34,11 +33,11 @@ export default {
                 router.push("/")
               })
         },
-        getUserData: function() {
-            let self = this    
+        getUserData() {  
             axios.get("/api/user")    
               .then((response) => {      
-                self.$set(this, "user", response.data.user)    
+                this.user = response.data.user
+                this.$store.commit('welcomeUser', response.data.user)
               })    
               .catch((errors) => {    
                 console.log(errors)    
@@ -51,3 +50,10 @@ export default {
         }    
     }
 </script>
+<style>
+.schoolpanel {
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+}
+</style>

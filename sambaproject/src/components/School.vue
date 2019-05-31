@@ -1,18 +1,18 @@
 <template>
 <div>
-    <v-card color="#d3d3d3">
+    <v-card color="#F9F9F9">
         <v-card-actions>
             <h2>{{school.name}}</h2>
             <v-spacer></v-spacer>
-            <v-btn v-if="visible" flat icon right @click="toggleSchoolVisible(false)"><v-icon>close</v-icon></v-btn>
-            <v-btn v-else flat icon right @click="toggleSchoolVisible(true)"><v-icon>expand_more</v-icon></v-btn>
+            <v-btn v-if="visible" flat icon right @click="toggleSchoolVisible(false)"><v-icon>expand_more</v-icon></v-btn>
+            <v-btn v-else flat icon right @click="toggleSchoolVisible(true)"><v-icon>expand_less</v-icon></v-btn>
         </v-card-actions>
         <v-card-title v-if="visible">
         <h4>{{school.country}}</h4>
         <country-flag :country="countrycode"/>
         </v-card-title>
         <v-card-actions v-if="visible">
-            <v-btn>Manage events</v-btn>
+            <router-link to="/school/eventmanagement">Manage events</router-link>
             <v-btn>Update information</v-btn>
             <v-btn>Write an article</v-btn>
             <v-btn>See statistics</v-btn>
@@ -42,18 +42,14 @@ export default {
     },
     methods: {
         getSchoolData() {
-            console.log(this.schoolId)
-            console.log("here!")
             axios.get("/api/school", {
                params: {
                 id: this.schoolId
                }
             })
               .then((response) => {
-                console.log(response)
                 this.school = response.data.school
                 this.getCountry(response.data.school.country)
-                
               })
               .catch((errors) => {
                 console.log(errors)

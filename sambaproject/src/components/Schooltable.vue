@@ -1,5 +1,6 @@
 <template>
   <div>
+    <v-card>
     <v-data-table
     :headers="headers"
     :items="schools"
@@ -9,15 +10,13 @@
       <td>{{ props.item.id }}</td>
       <td><country-flag :country="$store.getters.countries[props.item.country]"/></td>
        <td>{{ props.item.name }}</td>
-      <td>{{ props.item.country }}</td>
-      <td>{{ props.item.city }}</td>
       <td>{{ props.item.email }}</td>
       <td>
         Nothing yet!
       </td>
     </template>
   </v-data-table>
-  
+    </v-card>
   </div>
 </template>
 <script>
@@ -32,8 +31,6 @@ export default {
               {text: "id", value: "id"}, 
               {text: "Flag", value: "flag"},
               {text: "Name", value: "name", sortable: true},
-              {text: "Country", value: "country", sortable: true},
-              {text: "City", value: "city", sortable: true},
               {text: "Email", value: "email", sortable: true},
               {text: "Actions", value: "actions"}
             ],

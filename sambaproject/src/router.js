@@ -10,6 +10,7 @@ import Userlist from './views/Userlist.vue'
 import Schoollist from './views/Schoollist.vue'
 import Guest from './views/Guest.vue'
 import userSettings from './views/Settings'
+import Eventmanagement from './views/EventManagement'
 import axios from "axios"
 
 Vue.use(Router)
@@ -58,6 +59,24 @@ export default new Router({
       path: "/settings",
       name: "UserSettings",
       component: userSettings,
+      beforeEnter: (to, from, next) => {
+        axios.get("/api/user")    
+          .then((response) => {    
+            console.log(response) 
+            next()  
+          })
+          .catch((errors) => {    
+            console.log(errors)    
+            next({
+              path: '/login'
+             })   
+          })   
+      }
+    },
+    {
+      path: "/school/eventmanagement",
+      name: "Eventmanagement",
+      component: Eventmanagement,
       beforeEnter: (to, from, next) => {
         axios.get("/api/user")    
           .then((response) => {    
