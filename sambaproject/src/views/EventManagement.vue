@@ -136,7 +136,7 @@ export default {
           startdate: this.startdate,
           enddate: this.enddate,
           fee: this.fee,
-          school: this.user.id
+          school: this.user.school
         }
         console.log(data)
         axios.post("/api/addEvent", data)

@@ -1,18 +1,17 @@
 <template>
-<v-card>
-    <v-data-table
-    :headers="headers"
-    :items="events"
-    class="elevation-1"
-  >
-    <template v-slot:items="props">
-      <td>{{ props.item.id }}</td>
-      <td><country-flag :country="props.item.country"/></td>
-      <td>{{ props.item.name }}</td>
-      <td>{{ props.item.fee }} €</td>
-    </template>
-  </v-data-table>
-    </v-card>
+    <v-container fluid grid-list-md>
+        <v-layout row wrap>
+            <v-flex  v-for="event in events" v-bind:key="event.id" sm4>
+                <v-card>
+                    <v-card-title><h2>{{event.name}}</h2></v-card-title>
+                    <v-card-text>
+                        <country-flag :country="event.country"/>
+                        <div>{{ event.startdate + " - " + event.enddate}}</div>
+                    </v-card-text>
+                </v-card>
+            </v-flex>
+        </v-layout>
+    </v-container>
 </template>
 <script>
 import axios from "axios"
