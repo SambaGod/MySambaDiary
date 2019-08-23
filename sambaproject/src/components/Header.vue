@@ -4,17 +4,19 @@
   <v-toolbar app>
     <v-toolbar-side-icon class="grey--text" @click="drawer=!drawer"></v-toolbar-side-icon>
     <toolbar-title class="grey--text">
+      <router-link to="./">
       <span class="font-weight-thin">My</span>
-      <span><b>SambaDiary</b></span>&nbsp;
+      <span><b>Samba<span class="red--text">Diary</span></b></span>&nbsp;
+      </router-link>
     </toolbar-title>
     
-     <router-link to="./">Home</router-link> |
+     <!-- <router-link to="./">Home</router-link> |
       <router-link to="./login">Login</router-link> |
-      <router-link to="./register">Register</router-link>
+      <router-link to="./register">Register</router-link> -->
 
       <v-spacer></v-spacer>
 
-    <v-btn depressed class="grey--text headline">
+    <v-btn depressed class="grey--text headline" to="./login">
     <span>LOGIN</span>
     <v-icon right>power_settings_new</v-icon>
     </v-btn>
@@ -45,21 +47,10 @@ export default {
 
 <style>
 
-#nav {
-  margin: 0 auto;
-  border: solid 2px black;
-  
-}
-
 #nav a {
-  font-weight: bold;
-  color: #2c3e50;
+  color: gray;
+  text-decoration: none;
 }
-
-#nav a.router-link-exact-active {
-  color: #ed1d25;
-}
-
 
 </style>
 
