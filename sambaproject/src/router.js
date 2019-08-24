@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import App from './App.vue'
 import Home from './views/Home.vue'
 import Login from './views/Login.vue'
 import Register from './views/Register.vue'
@@ -10,6 +9,7 @@ import Userlist from './views/Userlist.vue'
 import Schoollist from './views/Schoollist.vue'
 import Guest from './views/Guest.vue'
 import userSettings from './views/Settings'
+import AdminDash from './components/admin/dash'
 import Eventmanagement from './views/EventManagement'
 import Events from './views/Events'
 import axios from "axios"
@@ -113,60 +113,87 @@ export default new Router({
               path: '/login'
              })   
           })   
-      }
+      },
+      children: [
+        {
+          path: "/admin/",
+          name: "admindash",
+          component: AdminDash,
+          beforeEnter: (to, from, next) => {
+            axios.get("/api/user")    
+              .then((response) => {
+                console.log(response.data.user)
+                if (response.data.user.isAdmin) {
+                  next()
+                } else {
+                  next({
+                    path: '/dashboard'
+                  }) 
+                }
+              })
+              .catch((errors) => {    
+                console.log(errors)    
+                next({
+                  path: '/login'
+                 })   
+              })   
+          }
+        },
+        {
+          path: "/admin/users",
+          name: "Adminusers",
+          component: Userlist,
+          beforeEnter: (to, from, next) => {
+            axios.get("/api/user")    
+              .then((response) => {
+                console.log(response.data.user)
+                if (response.data.user.isAdmin) {
+                  next()
+                } else {
+                  next({
+                    path: '/dashboard'
+                  }) 
+                }
+              })
+              .catch((errors) => {    
+                console.log(errors)    
+                next({
+                  path: '/login'
+                 })   
+              })   
+          }
+        },
+        {
+          path: "/admin/schools",
+          name: "Adminschools",
+          component: Schoollist,
+          beforeEnter: (to, from, next) => {
+            axios.get("/api/user")    
+              .then((response) => {
+                console.log(response.data.user)
+                if (response.data.user.isAdmin) {
+                  next()
+                } else {
+                  next({
+                    path: '/dashboard'
+                  }) 
+                }
+              })
+              .catch((errors) => {    
+                console.log(errors)    
+                next({
+                  path: '/login'
+                 })   
+              })   
+          }
+        },
+        {
+          path: '/events',
+          name: 'Events',
+          component: Events
+        }
+      ]
     },
-    {
-      path: "/admin/users",
-      name: "Adminusers",
-      component: Userlist,
-      beforeEnter: (to, from, next) => {
-        axios.get("/api/user")    
-          .then((response) => {
-            console.log(response.data.user)
-            if (response.data.user.isAdmin) {
-              next()
-            } else {
-              next({
-                path: '/dashboard'
-              }) 
-            }
-          })
-          .catch((errors) => {    
-            console.log(errors)    
-            next({
-              path: '/login'
-             })   
-          })   
-      }
-    },
-    {
-      path: "/admin/schools",
-      name: "Adminschools",
-      component: Schoollist,
-      beforeEnter: (to, from, next) => {
-        axios.get("/api/user")    
-          .then((response) => {
-            console.log(response.data.user)
-            if (response.data.user.isAdmin) {
-              next()
-            } else {
-              next({
-                path: '/dashboard'
-              }) 
-            }
-          })
-          .catch((errors) => {    
-            console.log(errors)    
-            next({
-              path: '/login'
-             })   
-          })   
-      }
-    },
-    {
-      path: '/events',
-      name: 'Events',
-      component: Events
-    }
+    
   ]
 })

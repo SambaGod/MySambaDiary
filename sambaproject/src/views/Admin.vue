@@ -1,33 +1,21 @@
 <template>
   <div>
+    <SideBar></SideBar>
     <v-content>
-      <v-container fluid grid-list-md>
-        <v-layout row wrap>
-          <v-flex md4 xs12>
-            <v-card color="primary">
-              <v-card-text class="px-0"><NewUsers></NewUsers></v-card-text>
-            </v-card>
-          </v-flex>
-          <v-flex md4 xs12>
-            <v-card color="primary">
-              <v-card-text class="px-0"><h2>Events</h2></v-card-text>
-            </v-card>
-          </v-flex>
-          <v-flex md4 xs12>
-            <v-card color="primary">
-              <v-card-text class="px-0"><h2>Something statistics</h2></v-card-text>
-            </v-card>
-          </v-flex>
-        </v-layout>
-        <div>    
-          <h2>Admin</h2>    
-          <p>Welcome, {{ user }}</p>
-          <div><router-link to="/dashboard">Switch to user view</router-link></div>
-          <div><router-link to="/admin/users">Manage users</router-link></div>
-          <div><router-link to="/admin/schools">Manage schools</router-link></div>
-          <v-btn v-on:click="logout">Logout</v-btn>
-        </div>
-      </v-container>
+      <v-toolbar>
+        <v-btn v-if="mobileView" flat icon><v-icon>menu</v-icon></v-btn>
+        <v-toolbar-title>
+          MySambaDIary
+          <!--<v-spacer></v-spacer>-->
+        </v-toolbar-title>
+        <v-spacer></v-spacer>
+        <p>{{ mobileView }}</p>
+        <h2>{{ user.name }}</h2>
+        <v-btn flat @click="logout()">Logout</v-btn>
+        
+      </v-toolbar>
+      
+      <router-view></router-view>
     </v-content>
   </div>
 </template>  
@@ -35,6 +23,7 @@
 import NewUsers from "@/components/admin/NewUsers"
 import axios from "axios"
 import router from "../router"
+import SideBar from "@/components/Sidebar"
 
 export default {    
   name: "Login",    
@@ -45,7 +34,18 @@ export default {
     }    
   },
   components: {
-    NewUsers
+    NewUsers,
+    SideBar
+  },
+  computed: {
+    mobileView() {
+      console.log(this.$vuetify.breakpoint.name)
+      if (this.$vuetify.breakpoint.name == "sm" || this.$vuetify.breakpoint.name == "xs") {
+        return true
+      } else {
+        return false
+      }
+    }
   },
   methods: {
     logout() {
@@ -75,7 +75,6 @@ export default {
     },
     onClickBtn() {
       this.$store.commit('toggleSidebar', true)
-      
     }
   },
   mounted () {

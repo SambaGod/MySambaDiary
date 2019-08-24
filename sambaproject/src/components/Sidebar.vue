@@ -51,8 +51,6 @@
           <v-list-tile-title v-text="link.text"/>
         </v-list-tile>
 
-        <b-button v-on:click="logout" class="lgout">Logout</b-button>
-
       </v-layout>
     </v-img>
     
