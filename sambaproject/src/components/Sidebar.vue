@@ -1,11 +1,14 @@
 <template>
 <v-navigation-drawer
-  id="app-drawer"
   v-model="inputValue"
+  id="app-drawer"
+  class="menu accent-4"
   app
+  absolute
   dark
-  mobile-break-point="991"
-  width="260"
+  :permanent="$vuetify.breakpoint.mdAndUp"
+  :temporary="$vuetify.breakpoint.smAndDown"
+  width="300"
 >
   <v-img
     :src="image"
@@ -17,17 +20,9 @@
       tag="v-list"
       column
     >
-      <v-list-tile avatar>
-      <v-list-tile-avatar
-        color="white"
-      >
-        <v-img
-          :src="logo"
-          height="34"
-          contain
-        />
-      </v-list-tile-avatar>
-      <v-list-tile-title class="title">Admin</v-list-tile-title>
+      <v-list-tile class="sidebarLink" avatar>
+        <v-list-tile-title class="title">Admin section</v-list-tile-title>
+        <!--{{inputValue}}-->
       </v-list-tile>
       <v-divider/>
         <v-list-tile v-if="responsive">
@@ -43,7 +38,7 @@
           :to="link.to"
           :active-class="'#21a018'"
           avatar
-          class="v-list-item"
+          class="v-list-item sidebarLink"
         >
           <v-list-tile-action>
             <v-icon>{{ link.icon }}</v-icon>
@@ -69,19 +64,23 @@ export default {
           links: [
               {
                 to: "/admin",
-                text: "Dashboard"
+                text: "Dashboard",
+                icon: 'view_module'
               },
               {
                 to: "/admin/schools",
-                text: "Samba schools"
+                text: "Samba schools",
+                icon: 'music_note'
               },
               {
                 to: "/admin/users",
-                text: "Users"
+                text: "Users",
+                icon: 'person'
               },
               {
                 to: "/admin/events",
-                text: "Events"
+                text: "Events",
+                icon: 'event'
               },
               
           ]
@@ -97,20 +96,21 @@ export default {
     }
   },
   computed: {
-    inputValue: {
-      get () {
-        return this.$store.getters.adminSidebarOpen
-      },
-      set (val) {
-        this.$store.commit('toggleSidebar', val)
-      }
+    inputValue() {
+        console.log(this.$store.getters.sidebarOpen)
+        return this.$store.getters.sidebarOpen
     }
   }
 
 }
 </script>
 
-<style>
+<style scoped>
+.sidebarLink {
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 5px;
+}
 .lgout{
   margin-top: 100px;
   margin-left: -70px;

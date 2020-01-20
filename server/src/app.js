@@ -57,6 +57,36 @@ passport.use(
   )
 )
 
+function addAttend(eid, uid) {
+  var reportedTime = new Date()
+  connection.query("INSERT INTO attends (eventid, userid, date) VALUES (?,?,?)", [eid, uid, reportedTime], function(err, rows) {
+    if (err) {
+      return err
+    }
+      return "Event added!"
+  })
+}
+
+function deleteAttend(eid, uid) {
+  connection.query("DELETE FROM attends WHERE userid = ? AND eventid = ?", [uid, eid], function(err, rows) {
+    if (err) {
+      return err
+    }
+      return "Unattended!"
+  })
+}
+
+function getAttends(uid) {
+  connection.query("SELECT eventid from attends WHERE userid = ?", uid, function(err, rows) {
+    if (err) {
+      return err
+    }
+      console.log("funktiossa")
+      console.log(rows)
+      return rows
+  })
+}
+
 passport.serializeUser((user, done) => {
   done(null, user.id)
 })
@@ -221,6 +251,30 @@ app.post("/api/addEvent", (req, res, next) =>{
   })
 })
 
+app.post("/api/attend", (req, res, next) =>{
+  console.log("trying to add event")
+  console.log(req.body)
+  res.send(addAttend(req.body.eventId, req.body.userId))
+})
+
+app.post("/api/unattend", (req, res, next) =>{
+  console.log("trying to unattend event")
+  console.log(req.body)
+  var r = deleteAttend(req.body.eventId, req.body.userId)
+  console.log("aaaa", r)
+  res.send(r)
+})
+
+app.get("/api/attends", (req, res, next) =>{
+  console.log("trying to get attends")
+  connection.query("SELECT eventid from attends WHERE userid = ?", req.user.id, function(err, rows) {
+    if (err) {
+      res.send(err)
+    }
+      res.send(rows)
+  })
+})
+
 app.get("/api/eventsBySchool", authMiddleware, (req, res) => {
   console.log(req.query.id)
   connection.query("SELECT * FROM event WHERE organizer = ?", req.query.id, function(err, rows){
@@ -240,9 +294,29 @@ app.post("/api/publishEvent", (req, res, next) =>{
 })
 
 app.get("/api/events", authMiddleware, (req, res) => {
-  connection.query("SELECT * FROM event WHERE published = 1", function(err, rows){
-    res.send({ events: rows })
-  });
+  if (req.query.textSearch.length > 2) {
+    connection.query("SELECT * FROM event WHERE name LIKE '%" + req.query.textSearch + "%' AND published = 1", function(err, rows){
+      res.send({ events: rows })
+    });
+  } else {
+    connection.query("SELECT * FROM event WHERE published = 1", function(err, rows){
+      res.send({ events: rows })
+    });
+  }
+  
+})
+
+app.get("/api/attends", authMiddleware, (req, res) => {
+  if (req.query.textSearch.length > 2) {
+    connection.query("SELECT * FROM event WHERE name LIKE '%" + req.query.textSearch + "%' AND published = 1", function(err, rows){
+      res.send({ events: rows })
+    });
+  } else {
+    connection.query("SELECT * FROM event WHERE published = 1", function(err, rows){
+      res.send({ events: rows })
+    });
+  }
+  
 })
 
 app.get("/api/schools", authMiddleware, (req, res) => {

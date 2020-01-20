@@ -1,6 +1,5 @@
 <template>
 <div>
-      <v-card >
         <h2>Register a samba school</h2>
         <v-form @submit="addSchool" ref="form">
             <v-text-field v-model="name" label="Name"></v-text-field>
@@ -17,7 +16,6 @@
             ></v-autocomplete>
             <v-btn type="submit">Add school!</v-btn>  
         </v-form>
-      </v-card>
 </div>
 </template>
 <script> 

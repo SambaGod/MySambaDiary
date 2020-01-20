@@ -40,3 +40,13 @@ CREATE TABLE `event` (
   KEY `organizer` (`organizer`),
   CONSTRAINT `event_ibfk_1` FOREIGN KEY (`organizer`) REFERENCES `school` (`id`));
 
+DROP TABLE IF EXISTS 'attends'
+
+CREATE TABLE `attends` (
+  `eventid` int(11) NOT NULL,
+  `userid` int(11) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`eventid`,`userid`),
+  KEY `userid` (`userid`),
+  CONSTRAINT `attends_ibfk_1` FOREIGN KEY (`eventid`) REFERENCES `event` (`id`),  CONSTRAINT `attends_ibfk_2` FOREIGN KEY (`userid`) REFERENCES `mylogin` (`id`))
+

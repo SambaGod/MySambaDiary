@@ -1,6 +1,6 @@
 <template>
 <div>
-    <div>New registered users from last week</div>
+    <div>Users</div>
     <h2>{{data.newUsers}}</h2>
 </div>
 </template>

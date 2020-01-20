@@ -63,7 +63,6 @@
             console.log(response)
             axios.get("/api/user")
               .then((response) => {
-                console.log(response)
                 if (response.data.user.isAdmin) {
                   router.push('/admin') 
                 } else {

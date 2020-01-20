@@ -6,6 +6,7 @@ import Register from './views/Register.vue'
 import Dashboard from './views/Dashboard.vue'
 import Admin from './views/Admin.vue'
 import Userlist from './views/Userlist.vue'
+import User from './views/User.vue'
 import Schoollist from './views/Schoollist.vue'
 import Guest from './views/Guest.vue'
 import userSettings from './views/Settings'
@@ -38,15 +39,17 @@ export default new Router({
         }
       ]
     },
+
+    //User routes
+
     {
-      path: "/dashboard",
-      name: "Dashboard",
-      component: Dashboard,
+      path: "/user",
+      name: "User",
+      component: User,
       beforeEnter: (to, from, next) => {
         axios.get("/api/user")    
-          .then((response) => {    
-            console.log(response) 
-            next()  
+          .then((response) => {   
+            next()
           })
           .catch((errors) => {    
             console.log(errors)    
@@ -54,26 +57,52 @@ export default new Router({
               path: '/login'
              })   
           })   
-      }
+      },
+      children: [
+        {
+          path: "/dashboard",
+          name: "Dashboard",
+          component: Dashboard,
+          beforeEnter: (to, from, next) => {
+            axios.get("/api/user")    
+              .then((response) => {    
+                console.log(response) 
+                next()  
+              })
+              .catch((errors) => {    
+                console.log(errors)    
+                next({
+                  path: '/login'
+                 })   
+              })   
+          }
+        },
+        {
+          path: "/settings",
+          name: "UserSettings",
+          component: userSettings,
+          beforeEnter: (to, from, next) => {
+            axios.get("/api/user")    
+              .then((response) => {    
+                console.log(response) 
+                next()  
+              })
+              .catch((errors) => {    
+                console.log(errors)    
+                next({
+                  path: '/login'
+                 })   
+              })   
+          }
+        },
+        {
+          path: '/events',
+          name: 'Events',
+          component: Events
+        }
+      ]
     },
-    {
-      path: "/settings",
-      name: "UserSettings",
-      component: userSettings,
-      beforeEnter: (to, from, next) => {
-        axios.get("/api/user")    
-          .then((response) => {    
-            console.log(response) 
-            next()  
-          })
-          .catch((errors) => {    
-            console.log(errors)    
-            next({
-              path: '/login'
-             })   
-          })   
-      }
-    },
+    
     {
       path: "/school/eventmanagement",
       name: "Eventmanagement",
@@ -92,6 +121,9 @@ export default new Router({
           })   
       }
     },
+
+    //Admin routed
+
     {
       path: "/admin",
       name: "Admin",
@@ -186,11 +218,6 @@ export default new Router({
                  })   
               })   
           }
-        },
-        {
-          path: '/events',
-          name: 'Events',
-          component: Events
         }
       ]
     },

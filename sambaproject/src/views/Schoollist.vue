@@ -1,10 +1,36 @@
 <template>
 <v-container fluid grid-list-md>
     <h1>Schools</h1>
-    <v-layout row wrap>
-        <v-flex><Schooltable></Schooltable></v-flex>
-        <v-flex><AddSchool></AddSchool></v-flex>
-    </v-layout>
+        <Schooltable></Schooltable>
+        <v-dialog
+          v-model="dialog"
+          width="500"
+        >
+        <template v-slot:activator="{ on }">
+          <v-btn
+            color="red lighten-2"
+            dark
+            v-on="on"
+          >
+          Add new school
+          </v-btn>
+        </template>
+
+        <v-card>
+          
+          <v-toolbar color="teal" dark>
+            <v-toolbar-title>Add new school</v-toolbar-title>
+
+            <v-spacer></v-spacer>
+
+          </v-toolbar>
+
+          <v-card-text>
+            <AddSchool></AddSchool>
+          </v-card-text>
+
+        </v-card>
+      </v-dialog>
 </v-container>
 </template>
 <script>

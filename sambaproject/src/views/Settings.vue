@@ -1,7 +1,6 @@
 <template>
 <div>
     <v-container>
-      <v-card >
         <h2>Update user information</h2>
         <v-form @submit="updateUser" ref="form">
             <v-text-field v-model="name" label="Update name"></v-text-field>
@@ -9,7 +8,6 @@
             <v-text-field v-model="password" label="Update password" type="password"></v-text-field>
             <v-btn type="submit">Update!</v-btn>  
         </v-form>
-      </v-card>
     </v-container>
 </div>
 </template>

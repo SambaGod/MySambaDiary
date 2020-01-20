@@ -1,6 +1,5 @@
 <template>  
     <div>
-      <!--<v-card >-->
         <v-form @submit="addUser" ref="form">
             <v-text-field v-model="name" label="Name"></v-text-field>
             <v-text-field v-model="email" label="Email"></v-text-field>
@@ -11,7 +10,6 @@
             ></v-checkbox>
             <v-btn type="submit">Register a new user!</v-btn>  
         </v-form>
-      <!--</v-card>-->
     </div>
 </template>
 <script> 
